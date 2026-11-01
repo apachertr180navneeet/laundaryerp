@@ -54,7 +54,7 @@
             @for ($i = 0; $i < $orderItem->quantity * 2; $i++)
                 <div class="table-item-container"  style=" border: 2px dashed #000; border-radius: 5px; margin: 2px;width:48mm; height: 63mm;">
                     <div class="table-item text-center">
-                        <p style="font-weight: bold; font-size: 14px; color: black; margin-bottom:10px; margin-top: 12px;">Mega Dry Cleaning</p>
+                        <p style="font-weight: bold; font-size: 14px; color: black; margin-bottom:10px; margin-top: 12px;">WashFlow ERP</p>
                         <p style="font-weight: bolder; font-size: 18px; color: black; margin-bottom:10px; margin-top: 12px;">{{ $order->order_number }}</p>
                         <p style="font-weight: bold; font-size: 14px; color: black; margin-bottom:10px; margin-top: 12px;text-transform: capitalize;">{{ $order->user->name }}</p>
                         <p style="font-weight: bold; font-size: 14px; color: black; margin-bottom:10px; margin-top: 10px;">{{ $order->delivery_date }}</p>
@@ -95,7 +95,7 @@
                 @for ($i = 0; $i < $lundaryItem->ProductQty	; $i++) <!-- Loop based on quantity -->
                     <div class="table-item-container"  style=" border: 2px dashed #000; border-radius: 5px; margin: 2px;width:48mm; height: 63mm;">
                         <div class="table-item text-center">
-                            <p style="font-weight: bold; font-size: 14px; color: black; margin-bottom:10px; margin-top: 12px;">Mega Dry Cleaning</p>
+                            <p style="font-weight: bold; font-size: 14px; color: black; margin-bottom:10px; margin-top: 12px;">WashFlow ERP</p>
                             <p style="font-weight: bolder; font-size: 18px; color: black; margin-bottom:10px; margin-top: 12px;">{{ $order->order_number }}</p>
                             <p style="font-weight: bold; font-size: 14px; color: black; margin-bottom:10px; margin-top: 12px;text-transform: capitalize;">{{ $order->user->name }}</p>
                             <p style="font-weight: bold; font-size: 14px; color: black; margin-bottom:10px; margin-top: 10px;">{{ $order->delivery_date }}</p>
@@ -124,7 +124,7 @@
             @for ($i = 0; $i < $orderItem->quantity; $i++)
                 <div class="table-item-container"  style=" border: 2px dashed #000; border-radius: 5px; margin: 2px;width:48mm; height: 63mm;">
                     <div class="table-item text-center">
-                        <p style="font-weight: bold; font-size: 14px; color: black; margin-bottom:10px; margin-top: 12px;">Mega Dry Cleaning</p>
+                        <p style="font-weight: bold; font-size: 14px; color: black; margin-bottom:10px; margin-top: 12px;">WashFlow ERP</p>
                         <p style="font-weight: bolder; font-size: 18px; color: black; margin-bottom:10px; margin-top: 12px;">{{ $order->order_number }}</p>
                         <p style="font-weight: bold; font-size: 14px; color: black; margin-bottom:10px; margin-top: 12px;text-transform: capitalize;">{{ $order->user->name }}</p>
                         <p style="font-weight: bold; font-size: 14px; color: black; margin-bottom:10px; margin-top: 10px;">{{ $order->delivery_date }}</p>

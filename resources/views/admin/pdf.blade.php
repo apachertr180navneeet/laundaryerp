@@ -7,7 +7,7 @@
     {{-- <img src="/theam/Images/logo.png" class="mt-0 mb-3" style="width: 200px;"> --}}
     <h6 class="mb-0" style="color: #5d596c; font-weight: 600; margin-bottom:0; font-size:18px;margin-top:0;">RECEIPT
     </h6>
-    <p class="mb-0" style="color: #5d596c;margin-bottom:0;font-size:16px; margin-top:0;">Mega Solutions</p>
+    <p class="mb-0" style="color: #5d596c;margin-bottom:0;font-size:16px; margin-top:0;">WashFlow ERP</p>
     <p class="mb-0" style="color: #5d596c;margin-bottom:0; font-size:16px;margin-top:0;"> 373, Block B, C Road, Jodhpur, Jodhpur,
         Rajasthan, 342003
     </p>

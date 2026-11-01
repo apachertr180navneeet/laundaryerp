@@ -85,7 +85,7 @@
                                     <!-- Table item starts -->
                                     <div class="table-item-container">
                                         <div class="table-item text-center">
-                                            <p style="font-weight: bold; font-size: 14px; color: #6c757d;">Mega Dry Cleaning</p>
+                                            <p style="font-weight: bold; font-size: 14px; color: #6c757d;">WashFlow ERP</p>
                                             <p style="font-weight: bold; font-size: 14px; color: #6c757d;text-transform: capitalize;">{{ $order->user->name }}</p>
                                             <p style="font-weight: bolder; font-size: 18px; color: #6c757d;">{{ $order->order_number }}</p>
                                             <p style="font-weight: bolder; font-size: 18px; color: #6c757d;">{{ $order->delivery_date }}</p>
@@ -122,7 +122,7 @@
                                         @endif
                                         <div class="table-item-container">
                                             <div class="table-item text-center">
-                                                <p style="font-weight: bold; font-size: 14px; color: #6c757d;">Mega Dry Cleaning</p>
+                                                <p style="font-weight: bold; font-size: 14px; color: #6c757d;">WashFlow ERP</p>
                                                 <p style="font-weight: bold; font-size: 14px; color: #6c757d;text-transform: capitalize;">{{ $order->user->name }}</p>
                                                 <p style="font-weight: bolder; font-size: 18px; color: #6c757d;">{{ $order->order_number }}</p>
                                                 <p style="font-weight: bolder; font-size: 18px; color: #6c757d;">{{ $order->delivery_date }}</p>
@@ -148,7 +148,7 @@
                                     @endif
                                     <div class="table-item-container">
                                         <div class="table-item text-center">
-                                            <p style="font-weight: bold; font-size: 14px; color: #6c757d;">Mega Dry Cleaning</p>
+                                            <p style="font-weight: bold; font-size: 14px; color: #6c757d;">WashFlow ERP</p>
                                             <p style="font-weight: bold; font-size: 14px; color: #6c757d;text-transform: capitalize;">{{ $order->user->name }}</p>
                                             <p style="font-weight: bolder; font-size: 18px; color: #6c757d;">{{ $order->order_number }}</p>
                                             <p style="font-weight: bolder; font-size: 18px; color: #6c757d;">{{ $order->delivery_date }}</p>

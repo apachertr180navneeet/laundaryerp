@@ -14,7 +14,7 @@
                         </a>
                     </div>
                     <!-- /Logo -->
-                    <h4 class="mb-1 pt-2 text_14355a_hp">Welcome to Mega Solutions! 👋</h4>
+                    <h4 class="mb-1 pt-2 text_14355a_hp">Welcome to WashFlow ERP! 👋</h4>
                     <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
                     <form id="formAuthentication" class="mb-3" action="{{route('otp.post')}}" method="POST"
