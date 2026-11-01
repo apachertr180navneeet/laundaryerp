@@ -55,5 +55,7 @@ class DatabaseSeeder extends Seeder
             Services::firstOrCreate(['name' => $srv['name']], $srv);
             Service::firstOrCreate(['name' => $srv['name']]);
         }
+        // 5. Seed Full Dummy Data
+        $this->call(DummyDataSeeder::class);
     }
 }
