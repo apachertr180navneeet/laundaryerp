@@ -129,7 +129,7 @@
                     </div>
 
                     <!-- Remember Option -->
-                    <div class="mb-4">
+                    <div class="mb-4 d-flex align-items-center justify-content-between flex-wrap gap-2">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="remember-me" name="remember" style="cursor: pointer;">
                             <label class="form-check-label small text-muted cursor-pointer" for="remember-me">
@@ -139,7 +139,7 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <button class="btn btn_1F446E_hp w-100 py-2 fw-semibold d-flex align-items-center justify-content-center gap-2 shadow-sm rounded-3" type="submit" style="height: 46px; font-size: 0.95rem;">
+                    <button class="btn btn_1F446E_hp btn-auth-submit w-100 py-2 fw-semibold d-flex align-items-center justify-content-center gap-2 shadow-sm rounded-3" type="submit">
                         <span>Sign In to Dashboard</span>
                         <i class="ti ti-arrow-right"></i>
                     </button>
