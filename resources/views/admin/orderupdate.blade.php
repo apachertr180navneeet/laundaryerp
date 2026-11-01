@@ -39,7 +39,7 @@
                     <p class="text-muted mb-0 small">Modify customer intake details, scheduled delivery and services</p>
                 </div>
                 <div class="d-flex align-items-center gap-2">
-                    <a href="{{ route('view.order') }}" class="btn btn-outline-secondary btn-sm">
+                    <a href="{{ route('viewOrder') }}" class="btn btn-outline-secondary btn-sm">
                         <i class="ti ti-arrow-left me-1"></i> Back to Orders
                     </a>
                 </div>

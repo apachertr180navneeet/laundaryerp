@@ -22,7 +22,7 @@
                 <p class="text-muted mb-0 small">Update your account login credentials</p>
             </div>
             <div class="d-flex align-items-center gap-2">
-                <a href="{{ route('profile') }}" class="btn btn-outline-secondary btn-sm">
+                <a href="{{ route('myProfile') }}" class="btn btn-outline-secondary btn-sm">
                     <i class="ti ti-arrow-left me-1"></i> Back to Profile
                 </a>
             </div>
@@ -100,7 +100,7 @@
                             </div>
 
                             <div class="d-flex flex-column flex-sm-row align-items-center justify-content-end gap-2 pt-3 border-top mt-4">
-                                <a href="{{ route('profile') }}" class="btn btn-outline-secondary w-100 w-sm-auto">Cancel</a>
+                                <a href="{{ route('myProfile') }}" class="btn btn-outline-secondary w-100 w-sm-auto">Cancel</a>
                                 <button class="btn btn-primary w-100 w-sm-auto px-4" type="submit">
                                     <i class="ti ti-shield-check me-1"></i> Update Password
                                 </button>

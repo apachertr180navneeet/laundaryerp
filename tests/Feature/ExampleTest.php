@@ -67,5 +67,15 @@ class ExampleTest extends TestCase
         $items = $this->get('/admin/items');
         $items->assertStatus(200);
         $items->assertSee('Catalog Items');
+
+        $addOrder = $this->get('/admin/order');
+        $addOrder->assertStatus(200);
+        $addOrder->assertSee('Create New Order');
+
+        $payments = $this->get('/admin/payment');
+        $payments->assertStatus(200);
+
+        $invoices = $this->get('/admin/invoice');
+        $invoices->assertStatus(200);
     }
 }
