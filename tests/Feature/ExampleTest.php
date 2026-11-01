@@ -71,6 +71,11 @@ class ExampleTest extends TestCase
         $addOrder = $this->get('/admin/order');
         $addOrder->assertStatus(200);
         $addOrder->assertSee('Create New Order');
+        $addOrder->assertSee('OrderPOS');
+        $addOrder->assertSee('cartItemsContainer');
+
+        $clientFetch = $this->get('/admin/fetch-client-name?client_num=9876543210');
+        $clientFetch->assertStatus(200);
 
         $payments = $this->get('/admin/payment');
         $payments->assertStatus(200);
