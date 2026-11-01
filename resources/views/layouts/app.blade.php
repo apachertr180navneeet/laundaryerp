@@ -11,7 +11,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{url('theam/Images/logo.png')}}" />
+    <link rel="icon" type="image/x-icon" href="{{asset('theam/Images/logo.png')}}" />
 
     @include('backend.layouts.include.style')
     @yield('extrastyle')
@@ -19,13 +19,13 @@
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="{{url('theam/assets/vendor/js/helpers.js')}}"></script>
+    <script src="{{asset('theam/assets/vendor/js/helpers.js')}}"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
-    <script src="{{url('assets/vendor/js/template-customizer.js')}}"></script>
+    <script src="{{asset('theam/assets/vendor/js/template-customizer.js')}}"></script>
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{url('theam/assets/js/config.js')}}"></script>
+    <script src="{{asset('theam/assets/js/config.js')}}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
@@ -53,7 +53,6 @@
 
     @include('backend.layouts.include.footer')
     @include('backend.layouts.include.js')
-    @include('backend.layouts.include.myjs')
     @yield('extrascript')
 
     <!-- Page JS -->

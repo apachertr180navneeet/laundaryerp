@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../..//public/theam/assets/" data-template="vertical-menu-template-starter">
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="{{ asset('theam/assets') }}/" data-template="vertical-menu-template-starter">
 
 <head>
     <meta charset="utf-8" />
@@ -11,7 +11,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{url('public/theam/Images/logo.png')}}" />
+    <link rel="icon" type="image/x-icon" href="{{asset('theam/Images/logo.png')}}" />
 
     @include('backend.layouts.include.style')
     @yield('extrastyle')
@@ -19,8 +19,8 @@
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="{{url('public/theam/assets/vendor/js/helpers.js')}}"></script>
-    <script src="{{url('public/theam/assets/js/config.js')}}"></script>
+    <script src="{{asset('theam/assets/vendor/js/helpers.js')}}"></script>
+    <script src="{{asset('theam/assets/js/config.js')}}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 

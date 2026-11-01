@@ -1,49 +1,49 @@
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
-<script src="{{url('public/theam/assets/vendor/libs/jquery/jquery.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/popper/popper.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/js/bootstrap.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
-<script src="{{url('public/package/jquery.validate.min.js')}}"></script>
-<script src="{{url('public/package/additional-methods.min.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/node-waves/node-waves.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/hammer/hammer.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/js/menu.js')}}"></script>
-<script src="{{url('public/theam/assets/js/main.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/js/helpers.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/js/template-customizer.js')}}"></script>
-<script src="{{url('public/theam/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/js/helpers.js')}}"></script>
-<script src="{{url('public/theam/assets/js/forms-editors.js')}}"></script>
-{{--  <script src="{{url('public/theam/assets/vendor/libs/quill/katex.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/quill/quill.js')}}"></script>  --}}
-<script src="{{url('public/package/toastr.min.js')}}"></script>
-<script src="{{url('public/package/bootstrap2-toggle.min.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/tagify/tagify.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/bootstrap-select/bootstrap-select.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/typeahead-js/typeahead.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/bloodhound/bloodhound.js')}}"></script>
-<script src="{{url('public/theam/assets/js/main.js')}}"></script>
-<script src="{{url('public/theam/assets/js/forms-selects.js')}}"></script>
-<script src="{{url('public/theam/assets/js/forms-tagify.js')}}"></script>
-<script src="{{url('public/theam/assets/js/forms-typeahead.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/i18n/i18n.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/moment/moment.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/pickr/pickr.js')}}"></script>
-<script src="{{url('public/theam/assets/js/forms-pickers.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/js/menu.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/jquery/jquery.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/popper/popper.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/js/bootstrap.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
+<script src="{{asset('package/jquery.validate.min.js')}}"></script>
+<script src="{{asset('package/additional-methods.min.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/node-waves/node-waves.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/hammer/hammer.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/js/menu.js')}}"></script>
+<script src="{{asset('theam/assets/js/main.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/js/helpers.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/js/template-customizer.js')}}"></script>
+<script src="{{asset('theam/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/js/helpers.js')}}"></script>
+<script src="{{asset('theam/assets/js/forms-editors.js')}}"></script>
+{{--  <script src="{{asset('theam/assets/vendor/libs/quill/katex.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/quill/quill.js')}}"></script>  --}}
+<script src="{{asset('package/toastr.min.js')}}"></script>
+<script src="{{asset('package/bootstrap2-toggle.min.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/tagify/tagify.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/bootstrap-select/bootstrap-select.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/typeahead-js/typeahead.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/bloodhound/bloodhound.js')}}"></script>
+<script src="{{asset('theam/assets/js/main.js')}}"></script>
+<script src="{{asset('theam/assets/js/forms-selects.js')}}"></script>
+<script src="{{asset('theam/assets/js/forms-tagify.js')}}"></script>
+<script src="{{asset('theam/assets/js/forms-typeahead.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/i18n/i18n.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/moment/moment.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/pickr/pickr.js')}}"></script>
+<script src="{{asset('theam/assets/js/forms-pickers.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/js/menu.js')}}"></script>
 <!-- endbuild -->
 <!-- Vendors JS -->
-<script src="{{url('public/theam/assets/vendor/libs/swiper/swiper.js')}}"></script>
-<!-- <script src="{{url('public/theam/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script> -->
+<script src="{{asset('theam/assets/vendor/libs/swiper/swiper.js')}}"></script>
+<!-- <script src="{{asset('theam/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script> -->
 <!-- Main JS -->
-<script src="{{url('public/theam/assets/js/main.js')}}"></script>
+<script src="{{asset('theam/assets/js/main.js')}}"></script>
 <!-- Page JS -->
-<script src="{{url('public/theam/assets/js/dashboards-analytics.js')}}"></script>
+<script src="{{asset('theam/assets/js/dashboards-analytics.js')}}"></script>
 {{--  <script>
     $('.summernote').summernote({
         toolbar: [
@@ -86,11 +86,11 @@
         }
     });
 </script>  --}}
-<script src="{{url('public/theam/assets/js/form-validation.js')}}"></script>
+<script src="{{asset('theam/assets/js/form-validation.js')}}"></script>
 
-<script src="{{url('public/theam/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js')}}"></script>
-<script src="{{url('public/theam/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js')}}"></script>
+<script src="{{asset('theam/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
