@@ -51,10 +51,11 @@
 
     <style>
         body {
-            background-image: url('{{ asset('theam/Images/login_bg3.png') }}');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat
+            background-color: #f8fafc;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: 'Public Sans', sans-serif;
         }
     </style>
 

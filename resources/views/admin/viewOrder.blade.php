@@ -45,7 +45,7 @@
                 <h5 class="card-title mb-0 d-flex align-items-center gap-2" style="font-size: 1.05rem; color: #1F446E;">
                     <i class="ti ti-list text-primary"></i> All Orders List
                 </h5>
-                <div style="min-width: 280px;">
+                <div class="w-100 w-sm-auto flex-grow-1 flex-sm-grow-0" style="min-width: 200px;">
                     <div class="input-group input-group-sm">
                         <span class="input-group-text bg-white border-end-0"><i class="ti ti-search text-muted"></i></span>
                         <input type="search" class="form-control border-start-0 ps-0" placeholder="Search order ID, client name..." id="orderSearch">

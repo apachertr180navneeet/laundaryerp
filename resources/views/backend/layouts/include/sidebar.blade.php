@@ -5,9 +5,12 @@
     @endphp
 @else
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme bg_1F446E_hp sidebar_section_hp">
-    <div class="app-brand demo" style="height: 75px; padding: 12px 18px; display: flex; align-items: center; justify-content: center;">
+    <div class="app-brand demo" style="height: 75px; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between;">
         <a href="{{ route('dashboard') }}" class="app-brand-link d-flex align-items-center gap-2">
             <img src="{{ asset('theam/Images/white_logo.png') }}" alt="WashFlow ERP" style="max-height: 44px; width: auto; object-fit: contain;">
+        </a>
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none text-white p-2">
+            <i class="ti ti-x ti-sm align-middle"></i>
         </a>
     </div>
 
@@ -116,9 +119,10 @@
 
         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
             <!-- Quick New Order Shortcut -->
-            <li class="nav-item me-2 d-none d-sm-block">
-                <a href="{{ route('addOrder') }}" class="btn btn-sm btn-light text-primary fw-semibold shadow-sm d-flex align-items-center gap-1" style="border-radius: 20px;">
-                    <i class="ti ti-plus ti-xs"></i> New Order
+            <li class="nav-item me-1 me-sm-2">
+                <a href="{{ route('addOrder') }}" class="btn btn-sm btn-light text-primary fw-semibold shadow-sm d-flex align-items-center gap-1 px-2 px-sm-3" style="border-radius: 20px;" title="New Order">
+                    <i class="ti ti-plus ti-xs"></i>
+                    <span class="d-none d-sm-inline">New Order</span>
                 </a>
             </li>
 

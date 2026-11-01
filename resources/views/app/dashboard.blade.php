@@ -29,9 +29,9 @@
       </div>
 
       <!-- 4 KPI Stat Cards Grid -->
-      <div class="row g-4 mb-4">
+      <div class="row g-3 g-md-4 mb-4">
         <!-- Total Clients -->
-        <div class="col-sm-6 col-xl-3">
+        <div class="col-12 col-sm-6 col-xl-3">
           <div class="card stat-card h-100">
             <div class="card-body">
               <div class="d-flex align-items-center justify-content-between mb-2">
@@ -52,7 +52,7 @@
         </div>
 
         <!-- Total Orders -->
-        <div class="col-sm-6 col-xl-3">
+        <div class="col-12 col-sm-6 col-xl-3">
           <div class="card stat-card h-100">
             <div class="card-body">
               <div class="d-flex align-items-center justify-content-between mb-2">
@@ -73,7 +73,7 @@
         </div>
 
         <!-- Today's Orders -->
-        <div class="col-sm-6 col-xl-3">
+        <div class="col-12 col-sm-6 col-xl-3">
           <div class="card stat-card h-100">
             <div class="card-body">
               <div class="d-flex align-items-center justify-content-between mb-2">
@@ -93,7 +93,7 @@
         </div>
 
         <!-- Pending Orders (Last 10 Days) -->
-        <div class="col-sm-6 col-xl-3">
+        <div class="col-12 col-sm-6 col-xl-3">
           <div class="card stat-card h-100">
             <div class="card-body">
               <div class="d-flex align-items-center justify-content-between mb-2">
@@ -122,7 +122,7 @@
       <div class="card shadow-sm border-0 mb-4">
         <div class="card-header pb-2 d-flex flex-wrap align-items-center justify-content-between gap-3">
           <!-- Navigation Tabs -->
-          <ul class="nav nav-pills gap-2" id="dashboardOrderTabs" role="tablist">
+          <ul class="nav nav-pills gap-2 flex-nowrap overflow-x-auto text-nowrap pb-1" id="dashboardOrderTabs" role="tablist" style="-webkit-overflow-scrolling: touch; max-width: 100%;">
             <li class="nav-item" role="presentation">
               <button class="nav-link active d-flex align-items-center gap-2" id="today-orders-tab" data-bs-toggle="pill" data-bs-target="#today-orders-pane" type="button" role="tab" aria-controls="today-orders-pane" aria-selected="true">
                 <i class="ti ti-calendar-event"></i>
