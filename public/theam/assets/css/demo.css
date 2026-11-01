@@ -1301,4 +1301,134 @@ body {
   color: #0f172a;
 }
 
+/* ==========================================================================
+   Modern Global Pagination UI
+   ========================================================================== */
+.pagination-container {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 1rem 1.25rem !important;
+  background: transparent;
+}
+
+.pagination-container nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 0;
+}
+
+/* Hard reset and cap on any SVG arrows */
+nav svg,
+.pagination svg,
+.pagination-container svg {
+  width: 16px !important;
+  height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+  display: inline-block !important;
+  vertical-align: middle;
+}
+
+/* Bootstrap 5 Pagination List */
+.pagination {
+  display: flex !important;
+  align-items: center;
+  gap: 6px !important;
+  margin: 0 !important;
+  padding: 0;
+  list-style: none;
+  flex-wrap: wrap;
+}
+
+.pagination .page-item {
+  margin: 0 !important;
+}
+
+.pagination .page-item .page-link {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 38px;
+  padding: 6px 12px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600;
+  color: #334155 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease-in-out;
+  text-decoration: none !important;
+  line-height: 1;
+}
+
+.pagination .page-item:not(.active):not(.disabled) .page-link:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #1F446E !important;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #1F446E !important;
+  border-color: #1F446E !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  box-shadow: 0 3px 8px rgba(31, 68, 110, 0.3) !important;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #94a3b8 !important;
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  cursor: not-allowed !important;
+  opacity: 0.7;
+  box-shadow: none !important;
+}
+
+/* "Showing 1 to 10 of 25 results" Info text */
+.pagination-container p.text-muted,
+.pagination-container small,
+.pagination-container .small,
+.pagination-info {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b !important;
+  margin-bottom: 0;
+}
+
+@media (max-width: 767.98px) {
+  .pagination-container {
+    justify-content: center !important;
+    text-align: center;
+    gap: 8px;
+    padding: 0.75rem 0.5rem !important;
+  }
+
+  .pagination-container nav {
+    justify-content: center !important;
+    width: 100%;
+  }
+
+  .pagination {
+    justify-content: center !important;
+    gap: 4px !important;
+  }
+
+  .pagination .page-item .page-link {
+    min-width: 34px;
+    height: 34px;
+    padding: 4px 8px !important;
+    font-size: 0.8rem !important;
+    border-radius: 6px !important;
+  }
+}
+
+
 

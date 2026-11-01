@@ -1,18 +1,6 @@
 @extends('backend.layouts.app')
 @section('content')
 <style>
-    .pagination-container{
-        display: flex;
-        justify-content: end;
-        margin-top: 20px;
-    }
-    .pagination-container svg{
-        width: 30px;
-    }
-
-    .pagination-container nav .justify-between{
-        display: none;
-    }
     .no-records-found {
         text-align: center;
         color: red;
@@ -20,7 +8,6 @@
         font-size: 18px;
         display: none; /* Hidden by default */
     }
-
 </style>
     <div class="content-wrapper page_content_section_hp">
         <div class="container-xxl">

@@ -1,17 +1,6 @@
 @extends('backend.layouts.app')
 @section('content')
 <style>
-    .pagination-container {
-        display: flex;
-        justify-content: end;
-        margin-top: 20px;
-    }
-    .pagination-container svg {
-        width: 24px;
-    }
-    .pagination-container nav .justify-between {
-        display: none;
-    }
     #dateRangeContainer {
         display: none;
     }
