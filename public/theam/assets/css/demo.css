@@ -173,14 +173,72 @@
     background-color: #5484ba !important;
   }
 
-  .page_content_section_hp {
-    padding-left: 16rem;
-    padding-top: 100px;
+  /* ==========================================================================
+     Full-Width Fluid ERP Layout (Zero Wasted Whitespace)
+     ========================================================================== */
+  .container-xxl,
+  .container-xl,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-fluid,
+  .container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 
-  .layout-navbar-fixed .layout-navbar.navbar-detached {
-    /* left: 15.5rem !important; */
-    width: calc(100% - calc(1.5rem * 2) - 15.5rem)
+  .layout-navbar.navbar-detached.container-xxl {
+    max-width: 100% !important;
+  }
+
+  @media (min-width: 1200px) {
+    .page_content_section_hp {
+      padding-left: 16.25rem !important;
+      padding-right: 0 !important;
+      padding-top: 88px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0;
+      transition: padding-left 0.2s ease-in-out;
+    }
+
+    .layout-navbar-fixed .layout-navbar.navbar-detached {
+      left: calc(16.25rem + 1.5rem) !important;
+      right: 1.5rem !important;
+      width: calc(100% - 16.25rem - 3rem) !important;
+      max-width: calc(100% - 16.25rem - 3rem) !important;
+      margin: 0 !important;
+      transition: left 0.2s ease-in-out, width 0.2s ease-in-out;
+    }
+
+    .layout-menu-collapsed .page_content_section_hp {
+      padding-left: 5.4rem !important;
+    }
+
+    .layout-menu-collapsed .layout-navbar-fixed .layout-navbar.navbar-detached {
+      left: calc(5.4rem + 1.5rem) !important;
+      right: 1.5rem !important;
+      width: calc(100% - 5.4rem - 3rem) !important;
+      max-width: calc(100% - 5.4rem - 3rem) !important;
+    }
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .table-responsive {
+    width: 100% !important;
+  }
+
+  .table-responsive > table,
+  .dataTables_wrapper,
+  table.dataTable {
+    width: 100% !important;
   }
 
   .add_client_form_area_hp h4 {
@@ -401,7 +459,7 @@
     .page_content_section_hp {
       padding-left: 0 !important;
       padding-right: 0 !important;
-      padding-top: 86px !important;
+      padding-top: 84px !important;
       width: 100% !important;
     }
 
@@ -413,11 +471,19 @@
       color: #fff !important;
     }
 
-    .layout-navbar-fixed .layout-navbar.navbar-detached {
+    .layout-navbar-fixed .layout-navbar.navbar-detached,
+    .layout-navbar.navbar-detached.container-xxl {
       left: 1rem !important;
       right: 1rem !important;
       width: calc(100% - 2rem) !important;
-      margin: 0 auto !important;
+      max-width: calc(100% - 2rem) !important;
+      margin: 0 !important;
+    }
+
+    .container-xxl,
+    .container-fluid {
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
     }
   }
 
@@ -484,18 +550,6 @@
     }
   }
 
-  .layout-menu-collapsed .layout-navbar.navbar-detached {
-    width: auto !important;
-  }
-
-  .layout-menu-collapsed .page_content_section_hp {
-    padding-left: 5.4rem;
-  }
-
-  .layout-menu-collapsed .layout-navbar {
-    right: 25px;
-    left: 6.75rem !important;
-  }
 
   .layout-menu-collapsed .layout-wrapper .layout-container .layout-menu .app-brand {
     width: 100%;
@@ -1176,6 +1230,75 @@ body {
   .btn-mobile-full {
     width: 100% !important;
   }
+}
+
+/* POS & Order Builder Enhancements */
+.order-summary-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.subcategory {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+}
+
+.subcategory:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.Add_order_page_section .border.rounded {
+  border-color: #e6ebf1 !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.Add_order_page_section .border.rounded:hover {
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 2px 8px rgba(31, 68, 110, 0.05);
+}
+
+.Add_order_btn_area button.add-product-btn {
+  background: #1F446E;
+  color: #fff;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.Add_order_btn_area button.add-product-btn:hover {
+  background: #2b5d95;
+  color: #fff;
+}
+
+.piece-count {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1F446E;
+}
+
+.input-group-text.decrease,
+.input-group-text.increase {
+  cursor: pointer;
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+  padding: 0.5rem 0.85rem;
+  color: #334155;
+  transition: background-color 0.15s;
+}
+
+.input-group-text.decrease:hover,
+.input-group-text.increase:hover {
+  background-color: #e2e8f0;
+  color: #0f172a;
 }
 
 

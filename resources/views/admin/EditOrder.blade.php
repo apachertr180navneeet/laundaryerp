@@ -56,28 +56,34 @@
         </div>
     </div>
     <div class="content-wrapper page_content_section_hp">
-        <div class="container-xxl">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <!-- Page Header -->
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
+                <div>
+                    <h4 class="fw-bold mb-1 d-flex align-items-center gap-2">
+                        <i class="ti ti-shopping-cart-plus text-primary"></i> Create New Order
+                    </h4>
+                    <p class="text-muted mb-0 small">Counter POS intake & garment service selector</p>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="{{ route('view.order') }}" class="btn btn-outline-secondary btn-sm">
+                        <i class="ti ti-arrow-left me-1"></i> Back to Orders
+                    </a>
+                </div>
+            </div>
+
             <div class="client_list_area_hp Add_order_page_section">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="client_list_heading_area">
-                                    <h4>
-                                        Add Order
-                                    </h4>
-                                </div>
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-3 p-md-4">
+                        @if ($errors->any())
+                            <div class="alert alert-danger mb-4">
+                                <ul class="mb-0 ps-3">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        </div>
+                        @endif
                         <form action="{{ route('add.order') }}" method="POST" id="addOrderFormValidation"
                             enctype="multipart/form-data">
                             @csrf
@@ -124,41 +130,26 @@
                                         </div>
                                         <!-- Gross Total Section -->
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-3">
-                                            <div class="row justify-content-between">
+                                            <div class="order-summary-box p-3 rounded-3" style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <span class="text-muted fw-semibold">Gross Total:</span>
+                                                    <span class="fw-bold text-dark font-monospace" id="grossTotal">0.0</span>
+                                                </div>
                                                 <input type="hidden" name="gross_total" id="gross_total" />
-                                                <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                                                    <h6>Gross Total:</h6>
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <span class="text-muted fw-semibold">Discount Amount:</span>
+                                                    <span class="fw-bold text-danger font-monospace" id="discountAmount">0.0</span>
                                                 </div>
-                                                <div class="col-xl-4 col-lg-4 col-md-4 col-12 text-end">
-                                                    <h6 id="grossTotal">0.0</h6>
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <span class="text-muted fw-semibold">Total Garments:</span>
+                                                    <span class="badge bg-label-info font-monospace" id="totalQty">0 pc</span>
                                                 </div>
-                                            </div>
-                                            <div class="row justify-content-between">
-                                                <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                                                    <h6>Discount Amount:</h6>
-                                                </div>
-                                                <div id="discountAmount" class="col-xl-4 col-lg-4 col-md-4 col-12 text-end">
-                                                    <h6>0.0</h6>
-                                                </div>
-                                            </div>
-                                            <div class="row justify-content-between">
                                                 <input type="hidden" name="total_qty" id="total_qty" />
-                                                <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                                                    <h6>Total Count:</h6>
-                                                </div>
-                                                <div id="totalQty" class="col-xl-4 col-lg-4 col-md-4 col-12 text-end">
-                                                    <h6>0 pc</h6>
+                                                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                                    <span class="fw-bold text-primary fs-6">Net Payable:</span>
+                                                    <span class="fw-bold text-primary fs-5 font-monospace">₹ <span id="totalAmount">0</span></span>
                                                 </div>
                                             </div>
-                                            <div class="row justify-content-between">
-                                                <div class="col-xl-4 col-lg-4 col-md-4 col-12">
-                                                    <h6>Total Amount:</h6>
-                                                </div>
-                                                <div id="totalAmount" class="col-xl-4 col-lg-4 col-md-4 col-12 text-end">
-                                                    <h6>0</h6>
-                                                </div>
-                                            </div>
-                                            <hr class="px-2">
                                         </div>
                                         <!-- Delivery Date -->
                                         <div class="col-xl-4 col-lg-4 col-md-4 col-12 mb-3">
@@ -198,7 +189,9 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="Add_order_btn_area text-end">
-                                                <button class="btn w-100" type="submit" id="clickpardisable">Save</button>
+                                                <button class="btn btn-primary w-100 py-2 fs-6 fw-semibold shadow-sm" type="submit" id="clickpardisable">
+                                                    <i class="ti ti-check me-1"></i> Save & Place Order
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

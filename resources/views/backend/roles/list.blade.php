@@ -1,40 +1,43 @@
 @extends('backend.layouts.app')
+
 @section('content')
-<div class="content-wrapper mt-5">
-    <div class="container-xxl flex-grow-1 container-p-y mt-5">
-        <!-- <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add /</span> Blog</h4> -->
-        <div class="row">
-            <div class="col-md-11"></div>
-            <div class="col-md-1">
-                <a href="{{route('role.add')}}" class="btn btn-primary mb-2">Create</a>
+<div class="content-wrapper page_content_section_hp">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Page Header -->
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
+            <div>
+                <h4 class="fw-bold mb-1 d-flex align-items-center gap-2">
+                    <i class="ti ti-shield-check text-primary"></i> Roles Management
+                </h4>
+                <p class="text-muted mb-0 small">Manage user access roles and system security capabilities</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <a href="{{ route('role.add') }}" class="btn btn-primary btn-sm">
+                    <i class="ti ti-plus me-1"></i> Create Role
+                </a>
             </div>
         </div>
-        <div class="row">
-            <!-- Browser Default -->
-            <div class="col-md-2 mb-4 mb-md-0"></div>
-            <div class="col-md-10 mb-4 mb-md-0">
-                <div class="card">
-                    <h5 class="card-header">Add Role</h5>
-                    <div class="card-body">
-                        <table id="myTable" class="table display no-wrap table-hover role_datatable" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th width="100px">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
 
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-3 p-md-4">
+                <div class="table-responsive">
+                    <table id="myTable" class="table display no-wrap table-hover role_datatable modern-table" width="100%">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 80px;">ID</th>
+                                <th>Role Name</th>
+                                <th style="width: 120px;" class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
 @section('extrascript')
 <script type="text/javascript">
     $(function() {
@@ -42,28 +45,18 @@
             processing: false,
             serverSide: true,
             scrollX: true,
-            fixedHeader: {
-                header: true,
-                footer: true
-            },
             stateSave: true,
             ajax: "",
-            columns: [{
-                    data: 'id',
-                    name: 'id'
-                },
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'name', name: 'name' },
+                { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-end' },
             ],
-            bLengthChange: false
+            bLengthChange: false,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search roles..."
+            }
         });
     });
 </script>

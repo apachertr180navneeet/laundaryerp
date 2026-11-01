@@ -1,118 +1,128 @@
 @extends('backend.layouts.app')
+
 @section('content')
-<div class="content-wrapper mt-5">
-    <div class="container-xxl flex-grow-1 container-p-y mt-5">
-        <!-- <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;add /</span> Blog</h4> -->
-        <div class="row">
-            <!-- Browser Default -->
-            <div class="col-md-2 mb-4 mb-md-0"></div>
-            <div class="col-md-10 mb-4 mb-md-0">
-                <div class="card">
-                    <h5 class="card-header">Add Role</h5>
-                    <div class="card-body">
-                        <form class="needs-validation" method="post" action="{{ !empty($role->id) ?route('role.edit.post',['id' => $role->id]):route('role.post') }}" novalidate>
-                            @csrf
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <label class="form-label fa-lg" for="validationCustom01">Role Name</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Role name" required value="{{ !empty($role->name) ? $role->name : '' }}">
-                                    <span class="text-danger">
-                                        @error('name')
-                                        {{ $message }}
-                                        @enderror
-                                    </span>
-                                    <div class="invalid-feedback">
-                                        Please provide a Role Name.
-                                    </div>
-                                </div>
+<div class="content-wrapper page_content_section_hp">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Page Header -->
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
+            <div>
+                <h4 class="fw-bold mb-1 d-flex align-items-center gap-2">
+                    <i class="ti ti-shield text-primary"></i> {{ !empty($role->id) ? 'Edit Role' : 'Create Role' }}
+                </h4>
+                <p class="text-muted mb-0 small">Define role name and assign permission access privileges</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <a href="{{ route('role.list') }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="ti ti-arrow-left me-1"></i> Back to Roles
+                </a>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <form class="needs-validation" method="post" action="{{ !empty($role->id) ? route('role.edit.post', ['id' => $role->id]) : route('role.post') }}" novalidate>
+                    @csrf
+                    <div class="row mb-4">
+                        <div class="col-md-6 col-lg-5">
+                            <label class="form-label fw-semibold" for="roleName">Role Name <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted"><i class="ti ti-badge"></i></span>
+                                <input type="text" class="form-control" id="roleName" name="name" placeholder="e.g. Counter Staff, Accountant" required value="{{ !empty($role->name) ? $role->name : '' }}">
                             </div>
-                            <h3>Permission</h3>
-                            <div class="form-check mb-4">
-                                <input type="checkbox" class="form-check-input" id="checkAll" name="" value="">
-                                <label class="form-check-label" for="checkAll">All Checked</label>
+                            <span class="text-danger small mt-1 d-block">
+                                @error('name')
+                                {{ $message }}
+                                @enderror
+                            </span>
+                            <div class="invalid-feedback">
+                                Please provide a Role Name.
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="skin skin-flat">
-                                        <div class="form-group">
-                                            @if (!empty($curruntopeningdata[0]))
-                                            <h4>Currunt Openings</h4>
-                                            <div class="input-group">
-                                                <ul class="list-unstyled mb-0">
-                                                    @foreach ($curruntopeningdata as $value)
-                                                    <li class="form-check">
-                                                        <input type="checkbox" {{ !empty($allpermissions) && in_array($value->id, $allpermissions) ? 'checked=checked' : '' }} type="checkbox" class="form-check-input models_checkbox" id="customCheck{{ $value->id }}" name="permissions[]" value="{{ $value->id }}">
-                                                        <label class="form-check-label" for="customCheck{{$value->id }}">{{ $value->name }}</label>
-                                                    </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="skin skin-flat">
-                                        <div class="form-group">
-                                            @if (!empty($userdata[0]))
-                                            <h4>User</h4>
-                                            <div class="input-group">
-                                                <ul class="list-unstyled mb-0">
-                                                    @foreach ($userdata as $value)
-                                                    <li class="form-check">
-                                                        <input type="checkbox" {{ !empty($allpermissions) && in_array($value->id, $allpermissions) ? 'checked=checked' : '' }} type="checkbox" class="form-check-input models_checkbox" id="customCheck{{ $value->id }}" name="permissions[]" value="{{ $value->id }}">
-                                                        <label class="form-check-label" for="customCheck{{$value->id }}">{{ $value->name }}</label>
-                                                    </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="skin skin-flat">
-                                        <div class="form-group">
-                                            @if (!empty($roledata[0]))
-                                            <h4>Role</h4>
-                                            <div class="input-group">
-                                                <ul class="list-unstyled mb-0">
-                                                    @foreach ($roledata as $value)
-                                                    <li class="form-check">
-                                                        <input type="checkbox" {{ !empty($allpermissions) && in_array($value->id, $allpermissions) ? 'checked=checked' : '' }} type="checkbox" class="form-check-input models_checkbox" id="customCheck{{ $value->id }}" name="permissions[]" value="{{ $value->id }}">
-                                                        <label class="form-check-label" for="customCheck{{$value->id }}">{{ $value->name }}</label>
-                                                    </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary text-white mt-5" type="submit">Add Role</button>
-                        </form>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="d-flex align-items-center justify-content-between pb-2 mb-3 border-bottom">
+                        <h5 class="fw-bold mb-0 text-dark d-flex align-items-center gap-2">
+                            <i class="ti ti-lock-access text-primary"></i> Module Permissions
+                        </h5>
+                        <div class="form-check form-switch mb-0">
+                            <input type="checkbox" class="form-check-input" id="checkAll" role="switch">
+                            <label class="form-check-label fw-semibold" for="checkAll">Select All Permissions</label>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        @if (!empty($curruntopeningdata[0]))
+                        <div class="col-md-4">
+                            <div class="p-3 rounded-3" style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                                <h6 class="fw-bold mb-3 text-primary d-flex align-items-center gap-2">
+                                    <i class="ti ti-briefcase"></i> Operations / Openings
+                                </h6>
+                                <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+                                    @foreach ($curruntopeningdata as $value)
+                                    <li class="form-check">
+                                        <input {{ !empty($allpermissions) && in_array($value->id, $allpermissions) ? 'checked=checked' : '' }} type="checkbox" class="form-check-input models_checkbox" id="customCheck{{ $value->id }}" name="permissions[]" value="{{ $value->id }}">
+                                        <label class="form-check-label" for="customCheck{{ $value->id }}">{{ $value->name }}</label>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        @endif
+
+                        @if (!empty($userdata[0]))
+                        <div class="col-md-4">
+                            <div class="p-3 rounded-3" style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                                <h6 class="fw-bold mb-3 text-primary d-flex align-items-center gap-2">
+                                    <i class="ti ti-users"></i> Users Management
+                                </h6>
+                                <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+                                    @foreach ($userdata as $value)
+                                    <li class="form-check">
+                                        <input {{ !empty($allpermissions) && in_array($value->id, $allpermissions) ? 'checked=checked' : '' }} type="checkbox" class="form-check-input models_checkbox" id="customCheck{{ $value->id }}" name="permissions[]" value="{{ $value->id }}">
+                                        <label class="form-check-label" for="customCheck{{ $value->id }}">{{ $value->name }}</label>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        @endif
+
+                        @if (!empty($roledata[0]))
+                        <div class="col-md-4">
+                            <div class="p-3 rounded-3" style="background: #f8fafc; border: 1px solid #e2e8f0;">
+                                <h6 class="fw-bold mb-3 text-primary d-flex align-items-center gap-2">
+                                    <i class="ti ti-shield"></i> Roles & Permissions
+                                </h6>
+                                <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+                                    @foreach ($roledata as $value)
+                                    <li class="form-check">
+                                        <input {{ !empty($allpermissions) && in_array($value->id, $allpermissions) ? 'checked=checked' : '' }} type="checkbox" class="form-check-input models_checkbox" id="customCheck{{ $value->id }}" name="permissions[]" value="{{ $value->id }}">
+                                        <label class="form-check-label" for="customCheck{{ $value->id }}">{{ $value->name }}</label>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 pt-4 border-top mt-4">
+                        <button class="btn btn-primary px-4" type="submit">
+                            <i class="ti ti-device-floppy me-1"></i> {{ !empty($role->id) ? 'Update Role' : 'Save Role' }}
+                        </button>
+                        <a href="{{ route('role.list') }}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
 @section('extrascript')
 <script>
-    $('#checkAll').on('click', function() {
-        if (this.checked) {
-            $('.models_checkbox').each(function() {
-                this.checked = true;
-            });
-        } else {
-            $('.models_checkbox').each(function() {
-                this.checked = false;
-            });
-
-        }
-
+    $('#checkAll').on('change', function() {
+        $('.models_checkbox').prop('checked', this.checked);
     });
 </script>
 @endsection

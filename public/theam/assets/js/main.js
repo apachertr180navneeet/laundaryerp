@@ -4,8 +4,8 @@
 
 'use strict';
 
-let isRtl = window.Helpers.isRtl(),
-  isDarkStyle = window.Helpers.isDarkStyle(),
+var isRtl = window.Helpers ? window.Helpers.isRtl() : false,
+  isDarkStyle = window.Helpers ? window.Helpers.isDarkStyle() : false,
   menu,
   animate,
   isHorizontalLayout = false;
@@ -123,7 +123,9 @@ if (document.getElementById('layout-menu')) {
     }
   } else {
     // Removed style switcher element if not using template customizer
-    styleSwitcherToggleEl.parentElement.remove();
+    if (styleSwitcherToggleEl && styleSwitcherToggleEl.parentElement) {
+      styleSwitcherToggleEl.parentElement.remove();
+    }
   }
 
   // Update light/dark image based on current style

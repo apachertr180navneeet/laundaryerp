@@ -1,46 +1,57 @@
 @extends('backend.layouts.app')
+
 @section('content')
-<div class="container-xxl flex-grow-1 container-p-y mt-5">
-    <div class="content-wrapper mt-5">
-        <!-- <h4 class="fw-bold py-3"><span class="text-muted fw-light">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Blog /</span> List</h4> -->
-        <div class="row">
-            <div class="col-md-11"></div>
-            <div class="col-md-1">
-                <a href="{{route('permission.add')}}" class="btn btn-primary mb-2">Create</a>
+<div class="content-wrapper page_content_section_hp">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Page Header -->
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
+            <div>
+                <h4 class="fw-bold mb-1 d-flex align-items-center gap-2">
+                    <i class="ti ti-key text-primary"></i> Permissions Management
+                </h4>
+                <p class="text-muted mb-0 small">Overview of system privileges and capability gates</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <a href="{{ route('permission.add') }}" class="btn btn-primary btn-sm">
+                    <i class="ti ti-plus me-1"></i> Create Permission
+                </a>
             </div>
         </div>
-        <!-- Basic Bootstrap Table -->
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-11">
-                <div class="card container-fluid">
-                    <h5 class="card-header">Rermission List</h5>
-                    <div class="table-responsive text-nowrap">
-                        <table id="myTable" class="table display no-wrap table-hover role_datatable" width="100%">
-                            <thead>
-                                <tr>
-                                    <th> Name</th>
-                                    <th> Assign To </th>
-                                    <th> Date </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (!empty($list))
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-3 p-md-4">
+                <div class="table-responsive text-nowrap">
+                    <table id="myTable" class="table display no-wrap table-hover modern-table" width="100%">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Permission Name</th>
+                                <th>Guard Name</th>
+                                <th>Created Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!empty($list) && count($list) > 0)
                                 @foreach ($list as $row)
                                 <tr>
-                                    <td>{{ $row->name }}</td>
-                                    <td>{{ $row->guard_name  }}</td>
-                                    <td>{{ $row->created_at }}</td>
+                                    <td>
+                                        <span class="fw-semibold text-dark">{{ $row->name }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-label-info">{{ $row->guard_name }}</span>
+                                    </td>
+                                    <td class="text-muted small">{{ $row->created_at }}</td>
                                 </tr>
                                 @endforeach
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
+                            @else
+                                <tr>
+                                    <td colspan="3" class="text-center py-4 text-muted">No permissions found.</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <!--/ Basic Bootstrap Table -->
     </div>
 </div>
 @endsection

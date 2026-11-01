@@ -1,176 +1,157 @@
 @extends('backend.layouts.app')
+
 @section('content')
-
-<!-- Adding custom styles for table items -->
 <style>
-    .table-item-container {
-        width: 300px; /* Set fixed width for each item */
-        display: inline-block; /* Ensures that items are aligned horizontally */
+    .tag-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
     }
-
-    .table-item {
-        box-sizing: border-box;
-        padding: 10px;
-        background: #ffffffb3; /* Slight transparent white background */
-        border: 1px solid #dbdade; /* Light border */
-        border-radius: 5px; /* Rounded corners */
-        text-align: center; /* Center align text */
-        vertical-align: top; /* Align vertically to the top */
-    }
-
-    .table-item div {
-        color: black;
-        border-radius: 5px;
-    }
-
-    /* Style for the print button */
-    .print-button {
-        display: block;
-        width: 100%; /* Full width */
+    .tag-card {
+        background: #fff;
+        border: 2px dashed #cbd5e1;
+        border-radius: 10px;
+        padding: 16px;
         text-align: center;
-        margin: 20px 0; /* Adds margin to the top and bottom */
+        transition: all 0.2s ease;
+        position: relative;
     }
-
-    /* Button styles */
-    .print-button button {
-        color: black;
-        border: none;
-        border-radius: 5px;
+    .tag-card:hover {
+        border-color: #1F446E;
+        box-shadow: 0 4px 12px rgba(31, 68, 110, 0.08);
+    }
+    .tag-brand {
+        font-size: 11px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #64748b;
+    }
+    .tag-customer {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1e293b;
+        text-transform: capitalize;
+        margin-bottom: 4px;
+    }
+    .tag-order-num {
+        font-size: 18px;
+        font-weight: 800;
+        color: #1F446E;
+        font-family: monospace;
+        letter-spacing: 0.5px;
+    }
+    .tag-delivery {
         font-size: 12px;
-        cursor: pointer; /* Change cursor on hover */
+        font-weight: 600;
+        color: #475569;
+    }
+    .tag-total-badge {
+        display: inline-block;
+        background: #f1f5f9;
+        color: #334155;
+        font-weight: 700;
+        font-size: 12px;
+        padding: 2px 10px;
+        border-radius: 12px;
+        margin: 6px 0;
+    }
+    .tag-service-pill {
+        display: inline-block;
+        background: #1F446E;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 13px;
+        padding: 4px 14px;
+        border-radius: 6px;
+        margin: 6px 0;
+        text-transform: uppercase;
+    }
+    .tag-item-name {
+        font-size: 14px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 0;
     }
 </style>
 
 <div class="content-wrapper page_content_section_hp">
-    <div class="container-xxl">
-        <div class="client_list_area_hp Add_order_page_section">
-            <div class="card">
-                <div class="card-body">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Header -->
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
+            <div>
+                <h4 class="fw-bold mb-1 d-flex align-items-center gap-2">
+                    <i class="ti ti-tags text-primary"></i> Garment Tags
+                </h4>
+                <p class="text-muted mb-0 small">Order #{{ $order->order_number }} · Printable barcode & garment identification tags</p>
+            </div>
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <a href="{{ url('/admin/view-order') }}" class="btn btn-outline-secondary btn-sm">
+                    <i class="ti ti-arrow-left me-1"></i> Back to Orders
+                </a>
+                <a class="btn btn-primary btn-sm" href="{{ url('/admin/print-taglist/' . $order->id) }}" target="_blank">
+                    <i class="ti ti-printer me-1"></i> Print All Tags
+                </a>
+            </div>
+        </div>
 
-                    <!-- Back button and print button -->
-                    <div class="row justify-content-between mb-3">
-                        <div class="col-lg-3">
-                            <!-- Back to view-order page -->
-                            <a type="button" class="text-primary" href="{{ url('/admin/view-order') }}">
-                                <i class="fa-solid fa-arrow-left me-2"></i> Tags
-                            </a>
-                        </div>
-                        <div class="col-lg-1">
-                            <!-- Print tag list -->
-                            <a class="btn btn-primary" href="{{ url('/admin/print-taglist/' . $order->id) }}" type="button">
-                                <i class="fa-solid fa-print me-2"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Table container starts -->
-                    <div class="table-container">
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-4">
+                <div class="tag-grid">
+                    @foreach ($order->orderItems as $orderItem)
                         @php
-                            $counter = 0; // Initialize counter to keep track of items
+                            $service = $orderItem->operation_id;
                         @endphp
 
-                        <!-- Loop through each order item -->
-                        @foreach ($order->orderItems as $orderItem)
+                        @if($orderItem->Item->name == 'Shoe' || $orderItem->Item->name == 'Gloves' || $orderItem->Item->name == 'Socks/Stocking Pair'|| $orderItem->Item->name == 'Slip on')
+                            @for ($i = 0; $i < $orderItem->quantity * 2; $i++)
+                                <div class="tag-card">
+                                    <div class="tag-brand">WashFlow ERP</div>
+                                    <div class="tag-customer">{{ $order->user->name }}</div>
+                                    <div class="tag-order-num">{{ $order->order_number }}</div>
+                                    <div class="tag-delivery"><i class="ti ti-calendar me-1"></i>{{ $order->delivery_date }}</div>
+                                    <div><span class="tag-total-badge">Total: {{ $subTotalqty }}</span></div>
+                                    <div><span class="tag-service-pill">{{ $service }}</span></div>
+                                    <p class="tag-item-name">{{ $orderItem->Item->name }} ({{ $i + 1 }}/{{ $orderItem->quantity * 2 }})</p>
+                                </div>
+                            @endfor
+                        @elseif($orderItem->Item->name == 'Laundry By Weight')
                             @php
-                                $service = $orderItem->operation_id; // Get the service (operation id) for each item
+                                $lundaryItems = DB::table('lundary_order_item')
+                                    ->join('items', 'lundary_order_item.ProductName', '=', 'items.id')
+                                    ->join('categories', 'lundary_order_item.ProductCategroyId', '=', 'categories.id')
+                                    ->select('items.name as item_name', 'categories.name as category_name', 'lundary_order_item.ProductQty as ProductQty')
+                                    ->where('lundary_order_item.order_item_id', $order->id)
+                                    ->get();
                             @endphp
 
-                            <!-- Check if the item is Shoe, Gloves, or Socks/Stocking Pair -->
-                            @if($orderItem->Item->name == 'Shoe' || $orderItem->Item->name == 'Gloves' || $orderItem->Item->name == 'Socks/Stocking Pair'|| $orderItem->Item->name == 'Slip on')
-                                @for ($i = 0; $i < $orderItem->quantity * 2; $i++) <!-- Multiply by 2 as required -->
-                                    @if ($counter % 3 == 0)
-                                        <div class="table-row"> <!-- Open a new row every 3 items -->
-                                    @endif
-
-                                    <!-- Table item starts -->
-                                    <div class="table-item-container">
-                                        <div class="table-item text-center">
-                                            <p style="font-weight: bold; font-size: 14px; color: #6c757d;">WashFlow ERP</p>
-                                            <p style="font-weight: bold; font-size: 14px; color: #6c757d;text-transform: capitalize;">{{ $order->user->name }}</p>
-                                            <p style="font-weight: bolder; font-size: 18px; color: #6c757d;">{{ $order->order_number }}</p>
-                                            <p style="font-weight: bolder; font-size: 18px; color: #6c757d;">{{ $order->delivery_date }}</p>
-                                            <div><span>T {{ $subTotalqty }}</span></div>
-                                            <p style="font-weight: bold; font-size: 14px; color: #6c757d; border: 1px solid #000; width:100px; height: 30px;display: flex; align-items: center; justify-content: center; border-radius: 5px;margin: 5px auto;">{{ $service }}</p>
-                                            <p style="font-weight: bold; font-size: 14px; color: #6c757d;">{{ $orderItem->Item->name }}</p>
-                                        </div>
+                            @foreach ($lundaryItems as $lundaryItem)
+                                @for ($i = 0; $i < $lundaryItem->ProductQty; $i++)
+                                    <div class="tag-card">
+                                        <div class="tag-brand">WashFlow ERP</div>
+                                        <div class="tag-customer">{{ $order->user->name }}</div>
+                                        <div class="tag-order-num">{{ $order->order_number }}</div>
+                                        <div class="tag-delivery"><i class="ti ti-calendar me-1"></i>{{ $order->delivery_date }}</div>
+                                        <div><span class="tag-total-badge">Total: {{ $subTotalqty }}</span></div>
+                                        <div><span class="tag-service-pill">{{ $service }}</span></div>
+                                        <p class="tag-item-name">{{ $lundaryItem->item_name }}</p>
                                     </div>
-                                    @php
-                                        $counter++; // Increment counter
-                                    @endphp
-                                    @if ($counter % 3 == 0)
-                                        </div> <!-- Close row after every 3 items -->
-                                    @endif
                                 @endfor
-                            <!-- Check if the item is Laundry By Weight -->
-                            @elseif($orderItem->Item->name == 'Laundry By Weight')
-
-
-                                    @php
-                                        // Fetch related laundry items with categories and names for each quantity
-                                        $lundaryItems = DB::table('lundary_order_item')
-                                            ->join('items', 'lundary_order_item.ProductName', '=', 'items.id')
-                                            ->join('categories', 'lundary_order_item.ProductCategroyId', '=', 'categories.id')
-                                            ->select('items.name as item_name', 'categories.name as category_name', 'lundary_order_item.ProductQty as ProductQty')
-                                            ->where('lundary_order_item.order_item_id', $order->id)
-                                            ->get();
-                                    @endphp
-
-                                    @foreach ($lundaryItems as $lundaryItem)
-                                        @for ($i = 0; $i < $lundaryItem->ProductQty	; $i++) <!-- Loop based on quantity -->
-                                        @if ($counter % 3 == 0)
-                                            <div class="table-row"> <!-- Open a new row every 3 items -->
-                                        @endif
-                                        <div class="table-item-container">
-                                            <div class="table-item text-center">
-                                                <p style="font-weight: bold; font-size: 14px; color: #6c757d;">WashFlow ERP</p>
-                                                <p style="font-weight: bold; font-size: 14px; color: #6c757d;text-transform: capitalize;">{{ $order->user->name }}</p>
-                                                <p style="font-weight: bolder; font-size: 18px; color: #6c757d;">{{ $order->order_number }}</p>
-                                                <p style="font-weight: bolder; font-size: 18px; color: #6c757d;">{{ $order->delivery_date }}</p>
-                                                <div><span>T {{ $subTotalqty }}</span></div>
-                                                <p style="font-weight: bold; font-size: 14px; color: #6c757d; border: 1px solid #000; width:100px; height: 30px;display: flex; align-items: center; justify-content: center; border-radius: 5px;margin: 5px auto;">{{ $service }}</p>
-                                                <p style="font-weight: bold; font-size: 14px; color: #6c757d;">{{ $lundaryItem->item_name }}</p>
-                                            </div>
-                                        </div>
-                                        @php
-                                            $counter++; // Increment counter
-                                        @endphp
-                                        @if ($counter % 3 == 0)
-                                            </div> <!-- Close row after every 3 items -->
-                                        @endif
-                                        @endfor
-                                    @endforeach
-
-                            <!-- For other items -->
-                            @else
-                                @for ($i = 0; $i < $orderItem->quantity; $i++) <!-- Loop based on quantity -->
-                                    @if ($counter % 3 == 0)
-                                        <div class="table-row"> <!-- Open a new row every 3 items -->
-                                    @endif
-                                    <div class="table-item-container">
-                                        <div class="table-item text-center">
-                                            <p style="font-weight: bold; font-size: 14px; color: #6c757d;">WashFlow ERP</p>
-                                            <p style="font-weight: bold; font-size: 14px; color: #6c757d;text-transform: capitalize;">{{ $order->user->name }}</p>
-                                            <p style="font-weight: bolder; font-size: 18px; color: #6c757d;">{{ $order->order_number }}</p>
-                                            <p style="font-weight: bolder; font-size: 18px; color: #6c757d;">{{ $order->delivery_date }}</p>
-                                            <div><span>T {{ $subTotalqty }}</span></div>
-                                            <p style="font-weight: bold; font-size: 14px; color: #6c757d; border: 1px solid #000; width:100px; height: 30px;display: flex; align-items: center; justify-content: center; border-radius: 5px;margin: 5px auto;">{{ $service }}</p>
-                                            <p style="font-weight: bold; font-size: 14px; color: #6c757d;">{{ $orderItem->Item->name }}</p>
-                                        </div>
-                                    </div>
-                                    @php
-                                        $counter++; // Increment counter
-                                    @endphp
-                                    @if ($counter % 3 == 0)
-                                        </div> <!-- Close row after every 3 items -->
-                                    @endif
-                                @endfor
-                            @endif
-                        @endforeach
-
-                        <!-- Ensure the last row is closed properly -->
-                        @if ($counter % 3 != 0)
-                    </div>
-                    @endif
+                            @endforeach
+                        @else
+                            @for ($i = 0; $i < $orderItem->quantity; $i++)
+                                <div class="tag-card">
+                                    <div class="tag-brand">WashFlow ERP</div>
+                                    <div class="tag-customer">{{ $order->user->name }}</div>
+                                    <div class="tag-order-num">{{ $order->order_number }}</div>
+                                    <div class="tag-delivery"><i class="ti ti-calendar me-1"></i>{{ $order->delivery_date }}</div>
+                                    <div><span class="tag-total-badge">Total: {{ $subTotalqty }}</span></div>
+                                    <div><span class="tag-service-pill">{{ $service }}</span></div>
+                                    <p class="tag-item-name">{{ $orderItem->Item->name }} ({{ $i + 1 }}/{{ $orderItem->quantity }})</p>
+                                </div>
+                            @endfor
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>

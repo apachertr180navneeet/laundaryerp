@@ -1,46 +1,73 @@
 @extends('backend.layouts.auth_app')
-@section('content')
-<!-- Content -->
-<div class="container-xxl">
-    <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner py-4">
-            <!-- Login -->
-            <div class="card">
-                <div class="card-body">
-                    <!-- Logo -->
-                    <div class="app-brand justify-content-center mb-4">
-                        <a href="javascript:void(0);" class="app-brand-link gap-2">
-                            <img src="{{url('theam/Images/logo.png')}}" style="width: 130px;">
-                        </a>
-                    </div>
-                    <!-- /Logo -->
-                    <h4 class="mb-1 pt-2 text_14355a_hp">Welcome to WashFlow ERP! 👋</h4>
-                    <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
-                    <form id="formAuthentication" class="mb-3" action="{{route('otp.post')}}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        {{-- <div class="mb-3">
-                            <label for="email" class="form-label">Enter EMail</label>
-                            <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email"
-                                autofocus />
-                        </div> --}}
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Enter OTP</label>
-                            <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP"
-                                autofocus />
-                        </div>
-                        <div class="mb-3">
-                            <button class="btn btn_1F446E_hp w-100" type="submit">Submit</button>
-                        </div>
-                    </form>
+@section('content')
+<div class="auth-page-wrapper">
+    <!-- Left Hero/Brand Panel (Desktop) -->
+    <div class="auth-brand-panel d-none d-lg-flex flex-column justify-content-between">
+        <div>
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <img src="{{ asset('theam/Images/logo.png') }}" alt="WashFlow ERP" class="bg-white rounded p-2 shadow-sm" style="height: 52px; width: auto;" />
+                <div>
+                    <h3 class="text-white fw-bold mb-0">WashFlow ERP</h3>
+                    <small class="text-white-50">Smart Laundry & Dry Cleaning Management</small>
                 </div>
             </div>
-            <!-- /Register -->
+            <div class="mt-5">
+                <h2 class="text-white fw-bold mb-3">Two-Factor Authentication</h2>
+                <p class="text-white-50 fs-6">Enter the one-time verification passcode (OTP) sent to your registered communication channel to complete sign in.</p>
+            </div>
+        </div>
+
+        <div class="text-white-50 small">
+            &copy; 2026 WashFlow ERP · Safe & Encrypted Access
+        </div>
+    </div>
+
+    <!-- Right Form Panel -->
+    <div class="auth-form-panel">
+        <div class="auth-form-box">
+            <!-- Mobile Brand Header -->
+            <div class="text-center mb-4">
+                <img src="{{ asset('theam/Images/logo.png') }}" alt="WashFlow ERP" class="auth-mobile-logo" />
+                <h4 class="fw-bold mb-1 text-dark">Verify OTP 🔑</h4>
+                <p class="text-muted small">Enter the 6-digit verification code</p>
+            </div>
+
+            @if($errors->any())
+                <div class="alert alert-danger mb-3">
+                    <ul class="mb-0 ps-3 small">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form id="formAuthentication" action="{{ route('otp.post') }}" method="POST">
+                @csrf
+                <div class="mb-4">
+                    <label for="otp" class="form-label fw-semibold">Enter OTP Code</label>
+                    <div class="modern-input-group">
+                        <span class="input-group-text"><i class="ti ti-shield-check"></i></span>
+                        <input type="text" class="form-control text-center fs-4 fw-bold font-monospace" id="otp" name="otp" placeholder="· · · · · ·" maxlength="6" autofocus required />
+                    </div>
+                </div>
+
+                <button class="btn btn-primary w-100 btn-auth-submit mb-3" type="submit">
+                    <i class="ti ti-check me-2"></i> Verify & Sign In
+                </button>
+
+                <div class="text-center">
+                    <a href="{{ route('login') }}" class="d-inline-flex align-items-center text-primary fw-semibold small">
+                        <i class="ti ti-chevron-left me-1"></i> Back to Sign In
+                    </a>
+                </div>
+            </form>
+
+            <div class="text-center text-muted small mt-4 pt-3 border-top">
+                WashFlow ERP &copy; 2026 · All Rights Reserved
+            </div>
         </div>
     </div>
 </div>
-
-<!-- / Content -->
-
 @endsection

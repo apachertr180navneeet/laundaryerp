@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
         },
         init: instance => {
           instance.on('plugins.message.placed', function (e) {
-            if (e.element.parentElement.classList.contains('input-group')) {
+            if (e.element && e.element.parentElement && e.element.parentElement.classList && e.element.parentElement.classList.contains('input-group')) {
               e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
             }
           });
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     const numeralMask = document.querySelectorAll('.numeral-mask');
 
     // Verification masking
-    if (numeralMask.length) {
+    if (numeralMask.length && typeof Cleave !== 'undefined') {
       numeralMask.forEach(e => {
         new Cleave(e, {
           numeral: true
