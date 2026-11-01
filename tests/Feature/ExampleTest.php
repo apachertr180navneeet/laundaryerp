@@ -16,4 +16,26 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_user_can_post_to_root_and_login(): void
+    {
+        $response = $this->post('/', [
+            'email' => 'admin@laundry.com',
+            'password' => 'password',
+        ]);
+
+        $response->assertRedirect('/dashboard');
+        $this->assertAuthenticated();
+    }
+
+    public function test_user_can_post_to_login_and_login(): void
+    {
+        $response = $this->post('/login', [
+            'email' => 'admin@laundry.com',
+            'password' => 'password',
+        ]);
+
+        $response->assertRedirect('/dashboard');
+        $this->assertAuthenticated();
+    }
 }
