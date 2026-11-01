@@ -395,17 +395,17 @@
 
         // Delete functionality
         $(document).on('click', '.delete_btn', function() {
-            var tenantId = $(this).data('id');
-            $('#clothdel_id').val(tenantId);
+            var clothId = $(this).data('id');
+            $('#clothdel_id').val(clothId);
             $('#delete_item').modal('show');
         });
 
         $('#confirm_delete').click(function() {
             var formData = $('#deleteitemForm').serialize();
-            var tenantId = $('#clothdel_id').val();
+            var clothId = $('#clothdel_id').val();
 
             $.ajax({
-                url: '/admin/delete-clothes/' + tenantId,
+                url: '/admin/delete-clothes/' + clothId,
                 type: 'post',
                 data: formData,
                 success: function(response) {

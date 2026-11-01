@@ -14,7 +14,6 @@ class UserController extends Controller
     public function index(User $user)
     {
         $users = User::get();
-        //dd($tenants->toArray());
         return view('app.users.index',['users'=>$users]);
     }
 

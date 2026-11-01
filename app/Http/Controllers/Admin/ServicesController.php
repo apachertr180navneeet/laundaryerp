@@ -1,11 +1,10 @@
 <?php
 
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Tenant;
 use App\Models\Services;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

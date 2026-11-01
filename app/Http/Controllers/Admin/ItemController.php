@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Tenant;
 use App\Models\Item;
 use App\Models\ItemDetail;
 use App\Models\Category;

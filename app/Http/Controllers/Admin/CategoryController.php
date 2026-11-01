@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -8,7 +8,6 @@ use App\Models\ProductCategory;
 use App\Models\ProductItem;
 use App\Models\ProductType;
 use App\Models\Service;
-use App\Models\Tenant;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

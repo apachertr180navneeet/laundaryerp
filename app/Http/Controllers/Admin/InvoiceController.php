@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Exports\OrdersExport;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Models\Tenant;
 use Throwable;
 use Illuminate\Support\Facades\{ // Grouped imports for facades
     Session,
