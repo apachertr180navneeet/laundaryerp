@@ -32,12 +32,17 @@ class DashboardController extends Controller
             ->where('created_at', '>=', $today)
             ->count();
 
+        // Calculate today's revenue
+        $todayRevenue = Order::where('is_deleted', 0)
+            ->whereDate('created_at', $today)
+            ->sum('total_price');
+
         // Use eager loading instead of joins
         $orders = Order::with(['user', 'paymentDetail', 'orderItems'])
             ->where('is_deleted', 0)
             ->whereDate('created_at', $today)
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(10, ['*'], 'today_page');
 
         // Define the 10 days ago date
         $tenDaysAgo = Carbon::now()->subDays(10);
@@ -54,10 +59,10 @@ class DashboardController extends Controller
             ->where('status', 'pending')
             ->where('created_at', '>=', $tenDaysAgo)
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(10, ['*'], 'pending_page');
 
         // Pass data to the view
-        return view('app/dashboard', compact('orders', 'clientCounts', 'orderCounts', 'todayOrderCounts', 'pendingOrderCounts', 'pendingOrders'));
+        return view('app/dashboard', compact('orders', 'clientCounts', 'orderCounts', 'todayOrderCounts', 'pendingOrderCounts', 'pendingOrders', 'todayRevenue'));
     }
 
 }

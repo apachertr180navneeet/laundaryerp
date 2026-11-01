@@ -1,228 +1,277 @@
 @extends('backend.layouts.app')
 @section('content')
 <style>
-   .pagination-container{
+    .pagination-container {
         display: flex;
         justify-content: end;
         margin-top: 20px;
     }
-    .pagination-container svg{
-        width: 30px;
+    .pagination-container svg {
+        width: 24px;
     }
-
-    .pagination-container nav .justify-between{
+    .pagination-container nav .justify-between {
         display: none;
     }
     .no-records-found {
         text-align: center;
-        color: red;
-        margin-top: 20px;
-        font-size: 18px;
-        display: none; /* Hidden by default */
+        color: #e63946;
+        padding: 30px;
+        font-size: 15px;
+        display: none;
     }
 </style>
+
 <div class="content-wrapper page_content_section_hp">
     <div class="container-xxl">
-        <div class="client_list_area_hp">
-            <div class="card">
-                <div class="card-body">
-                    <div class="client_list_heading_area">
-                        <h4>Order List</h4>
-                        <div class="client_list_heading_search_area">
-                            <i class="menu-icon tf-icons ti ti-search"></i>
-                            <input type="search" class="form-control" placeholder="Searching ..." id="orderSearch">
-                        </div>
+
+        <!-- Page Header -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+            <div>
+                <h4 class="fw-bold mb-1" style="color: #1F446E;">
+                    <i class="ti ti-package me-2"></i>Order Management
+                </h4>
+                <p class="text-muted mb-0 small">Review incoming customer laundry bookings, statuses, and delivery workflows.</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <a href="{{ route('addOrder') }}" class="btn btn_1F446E_hp btn-sm d-flex align-items-center gap-1 shadow-sm">
+                    <i class="ti ti-plus ti-xs"></i>
+                    <span>Create New Order</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-3">
+                <h5 class="card-title mb-0 d-flex align-items-center gap-2" style="font-size: 1.05rem; color: #1F446E;">
+                    <i class="ti ti-list text-primary"></i> All Orders List
+                </h5>
+                <div style="min-width: 280px;">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-white border-end-0"><i class="ti ti-search text-muted"></i></span>
+                        <input type="search" class="form-control border-start-0 ps-0" placeholder="Search order ID, client name..." id="orderSearch">
                     </div>
-                    <div class="table-responsive-sm">
-                        <table class="table table-hover table-striped">
-                            <thead class="table_head_1f446E">
+                </div>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="modern-table align-middle">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px;">#</th>
+                                <th>Booking ID</th>
+                                <th>Client Name</th>
+                                <th>Mobile Number</th>
+                                <th class="text-center">Items</th>
+                                <th class="text-end" style="min-width: 170px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if ($orders->isEmpty())
                                 <tr>
-                                    <th>S. No.</th>
-                                    <th>Booking ID</th>
-                                    <th>Client Name</th>
-                                    <th>Mobile Number</th>
-                                    <th>No. of items</th>
-                                    <th>Action</th>
+                                    <td colspan="6" class="text-center py-4 text-muted">
+                                        <i class="ti ti-package-off fs-2 d-block mb-2"></i>
+                                        No order records found in the system.
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @if ($orders->isEmpty())
+                            @else
+                                @php
+                                    $serialNumber = ($orders->currentPage() - 1) * $orders->perPage() + 1;
+                                @endphp
+                                @foreach ($orders as $order)
                                     <tr>
-                                        <td colspan="6" class="text-center">No records found</td>
-                                    </tr>
-                                @else
-                                    @php
-                                        $serialNumber = 1; // Initialize serial number counter
-                                    @endphp
-                                    @foreach ($orders as $order)
-                                        <tr>
-                                            <td>{{ $serialNumber++ }}</td>
-                                            <td>
-                                                <?php
-                                                    // Format the order ID
-                                                    // $bookingId = 'ORD-' . date('Y') . '-' . str_pad($order->id, 3, '0', STR_PAD_LEFT);
-                                                    $bookingId =  $order->order_number;
-                                                ?>
-                                                {{ $bookingId }}
-                                            </td>
-                                            <td>{{ $order->name }}</td>
-                                            <td>{{ $order->mobile }}</td>
-                                            <td>{{ $order->total_qty }}</td>
-                                            <td>
-                                                <div class="Client_table_action_area">
-                                                    <a href="{{ url('/admin/show-order/' . $order->id) }}" class="btn Client_table_action_icon px-2">
-                                                        <i class="tf-icons ti ti-eye"></i>
-                                                    </a>
-                                                    @if ($order->payment_status !== 'Paid' || $order->status !== 'delivered')
-                                                        <button class="btn Client_table_action_icon px-2"
-                                                            onclick="window.location='{{ route('order.edit', $order->id) }}'">
-                                                            <i class="tf-icons ti ti-pencil"></i>
-                                                        </button>
-                                                        <div class="btn-group dropstart order_list_action_menu_dropmenu">
-                                                            <button type="button" class="btn Client_table_action_icon dropdown-toggle px-2"
-                                                                data-bs-toggle="dropdown" aria-expanded="false" data-order_id="{{ $order->id }}">
-                                                                <i class="tf-icons ti ti-layout-grid"></i>
-                                                            </button>
-                                                            <ul class="dropdown-menu">
-                                                                @if ($order->payment_status !== 'Paid' || $order->status !== 'delivered')
-                                                                    <li>
-                                                                        <a class="dropdown-item set_ord_btn" data-bs-toggle="modal" data-bs-target="#SettleOrder" data-order_id="{{ $order->id }}">
-                                                                            Settle Order
-                                                                        </a>
-                                                                    </li>
-                                                                @endif
-                                                                {{-- <li> <button type="button" class="btn mark-as-delivered-btn">Deliver</button></li> --}}
-                                                            </ul>
-                                                        </div>
-                                                    @endif
-                                                    <button type="button" class="btn Client_table_action_icon px-2 rcp_btn" data-order_id="{{ $order->id }}">
-                                                        <i class="fas fa-list"></i>
+                                        <td class="text-muted fw-semibold">{{ $serialNumber++ }}</td>
+                                        <td>
+                                            <a href="{{ url('/admin/show-order/' . $order->id) }}" class="fw-bold text-decoration-none">
+                                                <span class="badge bg-label-primary px-2 py-1">
+                                                    <i class="ti ti-tag ti-xs me-1"></i>#{{ $order->order_number }}
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="avatar-initial rounded-circle bg-label-secondary text-primary fw-bold" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+                                                    {{ strtoupper(substr($order->name ?? 'C', 0, 1)) }}
+                                                </div>
+                                                <span class="fw-semibold text-dark">{{ $order->name }}</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-inline-flex align-items-center gap-1 text-muted">
+                                                <i class="ti ti-phone ti-xs text-primary"></i>
+                                                <span>{{ $order->mobile }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-label-secondary rounded-pill px-3 py-1 fw-semibold">
+                                                {{ $order->total_qty }} pcs
+                                            </span>
+                                        </td>
+                                        <td class="text-end">
+                                            <div class="d-inline-flex align-items-center gap-1 Client_table_action_area">
+                                                <!-- View Order -->
+                                                <a href="{{ url('/admin/show-order/' . $order->id) }}" class="btn btn-sm btn-outline-primary px-2 py-1 Client_table_action_icon" title="View Order">
+                                                    <i class="ti ti-eye ti-xs"></i>
+                                                </a>
+
+                                                @if ($order->payment_status !== 'Paid' || $order->status !== 'delivered')
+                                                    <!-- Edit Order -->
+                                                    <button class="btn btn-sm btn-outline-secondary px-2 py-1 Client_table_action_icon"
+                                                        onclick="window.location='{{ route('order.edit', $order->id) }}'" title="Edit Order">
+                                                        <i class="ti ti-pencil ti-xs"></i>
                                                     </button>
-                                                    @if ($order->payment_status !== 'Paid' || $order->status !== 'delivered')
-                                                        <button class="btn Client_table_action_icon px-2 delete_order_btn" data-id="{{ $order->id }}" data-bs-toggle="modal" data-bs-target="#delete_order">
-                                                            <i class="tf-icons ti ti-trash"></i>
+
+                                                    <!-- Settle Dropdown -->
+                                                    <div class="btn-group dropstart order_list_action_menu_dropmenu">
+                                                        <button type="button" class="btn btn-sm btn-outline-warning px-2 py-1 dropdown-toggle Client_table_action_icon"
+                                                            data-bs-toggle="dropdown" aria-expanded="false" data-order_id="{{ $order->id }}" title="Order Actions">
+                                                            <i class="ti ti-layout-grid ti-xs"></i>
                                                         </button>
-                                                    @endif
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                            </tbody>
-                        </table>
+                                                        <ul class="dropdown-menu shadow border-0 py-1">
+                                                            <li>
+                                                                <a class="dropdown-item set_ord_btn py-2 text-warning d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#SettleOrder" data-order_id="{{ $order->id }}">
+                                                                    <i class="ti ti-cash"></i> Settle & Deliver
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                @endif
 
-                    </div>
-                    <div class="no-records-found">No records found related to your search.</div>
-                    @if ($orders->count() > 0)
-                        <div class="pagination-container">
-                            {{ $orders->links() }}
-                        </div>
-                    @endif
+                                                <!-- Print / Tags -->
+                                                <button type="button" class="btn btn-sm btn-outline-info px-2 py-1 Client_table_action_icon rcp_btn" data-order_id="{{ $order->id }}" title="Print Receipt & Tags">
+                                                    <i class="ti ti-printer ti-xs"></i>
+                                                </button>
 
-                    <!-- Settle Order -->
-                    <div class="modal fade" id="SettleOrder" tabindex="-1" aria-labelledby="SettleOrderLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="SettleOrderLabel">Payment Options</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="settleOrderForm">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="paymentOption"
-                                                        id="cashOn" value="cash">
-                                                    <label class="form-check-label" for="cashOn">
-                                                        <i class="fa-solid fa-money-bill-wave me-2"></i> Cash On
-                                                    </label>
-                                                </div>
+                                                @if ($order->payment_status !== 'Paid' || $order->status !== 'delivered')
+                                                    <!-- Delete -->
+                                                    <button class="btn btn-sm btn-outline-danger px-2 py-1 Client_table_action_icon delete_order_btn" data-id="{{ $order->id }}" data-bs-toggle="modal" data-bs-target="#delete_order" title="Delete Order">
+                                                        <i class="ti ti-trash ti-xs"></i>
+                                                    </button>
+                                                @endif
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="paymentOption"
-                                                        id="upiPayment" value="Online">
-                                                    <label class="form-check-label" for="upiPayment">
-                                                        <i class="fa-solid fa-angles-right me-2"></i> UPI Payment
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12"> <span id="paymentError" class="text-danger"></span></div>
-                                        </div>
-
-
-                                    </form>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" id="settleAndDeliverButton">Settle &
-                                        Deliver</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- end -->
-
-                    <!-- Delete Order -->
-                    <div class="modal fade" id="delete_order" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Are you sure you want to delete this order ?
-                                </div>
-                                <form method="post" id="deleteOrderForm">
-                                    @csrf <!-- Include CSRF token -->
-                                    @method('GET')
-                                    <input type="hidden" id="order_del_id" name="service_id">
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-danger" id="confirm_delete">Delete</button>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end -->
-                    {{-- print model --}}
-                    <div class="modal fade" id="yes" tabindex="-1" aria-labelledby="yesLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body text-center">
-                                    <h5>Please Select from the Following Options</h5>
-                                    <!-- Add your modal content here -->
-                                    {{-- <a type="button" class="btn btn-success mb-2" id="sendWhatsAppMessage">
-                                        <i class="fab fa-whatsapp me-2"></i> Send On WhatsApp
-                                    </a> --}}
-                                    <a type="button" class="btn btn-primary mb-2" id="printReceipt">
-                                        <i class="fa-solid fa-file-invoice me-2"></i> Print Receipt
-                                    </a>
-                                    <a type="button" class="btn btn-success mb-2" id="printTags"><i
-                                            class="fa-solid fa-tag me-2"></i> Print Tag</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- end --}}
-
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
                 </div>
 
+                <div class="no-records-found">
+                    <i class="ti ti-search-off fs-2 d-block mb-2 text-muted"></i>
+                    <span>No orders found matching your search.</span>
+                </div>
+
+                @if ($orders->count() > 0)
+                    <div class="pagination-container p-3 border-top">
+                        {{ $orders->links() }}
+                    </div>
+                @endif
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Settle Order Modal -->
+<div class="modal fade" id="SettleOrder" tabindex="-1" aria-labelledby="SettleOrderLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 12px;">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold" id="SettleOrderLabel" style="color: #1F446E;">
+                    <i class="ti ti-wallet me-2"></i>Select Payment Method
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="settleOrderForm">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded text-center h-100 bg-light">
+                                <div class="form-check d-flex flex-column align-items-center">
+                                    <input class="form-check-input mb-2" type="radio" name="paymentOption" id="cashOn" value="cash" style="width: 20px; height: 20px;">
+                                    <label class="form-check-label fw-semibold cursor-pointer" for="cashOn">
+                                        <i class="ti ti-cash fs-3 text-success d-block mb-1"></i> Cash on Delivery
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 border rounded text-center h-100 bg-light">
+                                <div class="form-check d-flex flex-column align-items-center">
+                                    <input class="form-check-input mb-2" type="radio" name="paymentOption" id="upiPayment" value="Online" style="width: 20px; height: 20px;">
+                                    <label class="form-check-label fw-semibold cursor-pointer" for="upiPayment">
+                                        <i class="ti ti-qrcode fs-3 text-primary d-block mb-1"></i> UPI / Online
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <span id="paymentError" class="text-danger small mt-1 d-block text-center"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn_1F446E_hp" id="settleAndDeliverButton">
+                    <i class="ti ti-check me-1"></i> Settle & Deliver
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Order Modal -->
+<div class="modal fade" id="delete_order" tabindex="-1" aria-labelledby="deleteOrderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 12px;">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold text-danger" id="deleteOrderModalLabel">
+                    <i class="ti ti-alert-triangle me-2"></i>Confirm Order Deletion
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <div class="avatar avatar-lg rounded-circle bg-label-danger mx-auto mb-3" style="width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+                    <i class="ti ti-trash"></i>
+                </div>
+                <h5 class="fw-semibold mb-1">Are you sure?</h5>
+                <p class="text-muted small mb-0">Are you sure you want to delete this order? This action cannot be reversed.</p>
+                <form method="post" id="deleteOrderForm">
+                    @csrf
+                    @method('GET')
+                    <input type="hidden" id="order_del_id" name="service_id">
+                </form>
+            </div>
+            <div class="modal-footer bg-light justify-content-center">
+                <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger px-4" id="confirm_delete">Delete Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Print Receipt / Tags Modal -->
+<div class="modal fade" id="yes" tabindex="-1" aria-labelledby="yesLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 12px;">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold" id="yesLabel" style="color: #1F446E;">
+                    <i class="ti ti-printer me-2"></i>Print Documents
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <p class="text-muted small mb-4">Choose which document you would like to generate and print for this order:</p>
+                <div class="d-flex flex-column gap-3">
+                    <a href="#" target="_blank" class="btn btn_1F446E_hp py-2 d-flex align-items-center justify-content-center gap-2" id="printReceipt">
+                        <i class="ti ti-receipt"></i> Print Customer Receipt
+                    </a>
+                    <a href="#" target="_blank" class="btn btn-outline-success py-2 d-flex align-items-center justify-content-center gap-2" id="printTags">
+                        <i class="ti ti-tag"></i> Print Garment Tags
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -231,44 +280,15 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         $(document).ready(function() {
-            // $('#orderSearch').keyup(function () {
-            //     var searchText = $(this).val().toLowerCase();
-            //     var noRecord = true;
-            //     $('tbody tr').each(function () {
-            //         var bookingId = $(this).find('td:nth-child(2)').text()
-            //             .toLowerCase();
-            //         var clientName = $(this).find('td:nth-child(3)').text()
-            //             .toLowerCase();
-            //         var clientNumber = $(this).find('td:nth-child(4)').text()
-            //             .toLowerCase();
-            //         if (bookingId.indexOf(searchText) === -1 &&
-            //             clientName.indexOf(searchText) === -1 &&
-            //             clientNumber.indexOf(searchText) === -1) {
-            //             $(this).hide();
-            //         } else {
-            //             $(this).show();
-            //             noRecord = false;
-            //         }
-            //     });
-            //     if (noRecord) {
-            //         $('.no-records-found').show();
-            //         $('.pagination-container').hide(); // Hide pagination
-            //     } else {
-            //         $('.no-records-found').hide();
-            //         $('.pagination-container').show(); // Show pagination
-            //     }
-            // });
-
             $('#orderSearch').on('keyup', function() {
                 var searchText = $(this).val().toLowerCase();
                 $.ajax({
-                    url: '/admin/view-order', // The route for searching orders
+                    url: '/admin/view-order',
                     type: 'GET',
                     data: {
                         search: searchText
                     },
                     success: function(response) {
-                        console.log("new", response);
                         var orders = response.orders;
                         var pagination = response.pagination;
                         var tbody = $('tbody');
@@ -283,63 +303,86 @@
                         }
 
                         $.each(orders, function(index, order) {
+                            var firstLetter = order.name ? order.name.charAt(0).toUpperCase() : 'C';
+                            var isSettled = (order.payment_status === 'Paid' && order.status === 'delivered');
                             var row = `
-                <tr>
-                    <td>${serialNumber++}</td>
-                    <td>${order.order_number}</td>
-                    <td>${order.name}</td>
-                    <td>${order.mobile}</td>
-                    <td>${order.total_qty}</td>
-                    <td>
-                        <div class="Client_table_action_area">
-                            <a href="/admin/show-order/${order.id}" class="btn Client_table_action_icon px-2">
-                                <i class="tf-icons ti ti-eye"></i>
-                            </a>
-                            ${order.payment_status !== 'Paid' || order.status !== 'delivered' ? `
-                                    <button class="btn Client_table_action_icon px-2" onclick="window.location='/admin/edit-order/${order.id}'">
-                                        <i class="tf-icons ti ti-pencil"></i>
-                                    </button>
-                                    <button class="btn Client_table_action_icon px-2 delete_order_btn" data-id="${order.id}" data-bs-toggle="modal" data-bs-target="#delete_order">
-                                        <i class="tf-icons ti ti-trash"></i>
-                                    </button>
-                                    <div class="btn-group dropstart order_list_action_menu_dropmenu">
-                                        <button type="button" class="btn Client_table_action_icon dropdown-toggle px-2" data-bs-toggle="dropdown" aria-expanded="false" data-order_id="${order.id}">
-                                            <i class="tf-icons ti ti-layout-grid"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            ${order.payment_status !== 'Paid'|| order.status !== 'delivered' ? `
-                                    <li>
-                                        <a class="dropdown-item set_ord_btn" data-bs-toggle="modal" data-bs-target="#SettleOrder" data-order_id="${order.id}">
-                                            Settle Order
+                                <tr>
+                                    <td class="text-muted fw-semibold">${serialNumber++}</td>
+                                    <td>
+                                        <a href="/admin/show-order/${order.id}" class="fw-bold text-decoration-none">
+                                            <span class="badge bg-label-primary px-2 py-1">
+                                                <i class="ti ti-tag ti-xs me-1"></i>#${order.order_number}
+                                            </span>
                                         </a>
-                                    </li>` : ''}
-                                        </ul>
-                                    </div>` : ''}
-                            <button class="btn Client_table_action_icon px-2 rcp_btn" data-order_id="${order.id}">
-                                <i class="fas fa-list"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            `;
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="avatar-initial rounded-circle bg-label-secondary text-primary fw-bold" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 12px;">
+                                                ${firstLetter}
+                                            </div>
+                                            <span class="fw-semibold text-dark">${order.name}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-inline-flex align-items-center gap-1 text-muted">
+                                            <i class="ti ti-phone ti-xs text-primary"></i>
+                                            <span>${order.mobile}</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge bg-label-secondary rounded-pill px-3 py-1 fw-semibold">
+                                            ${order.total_qty} pcs
+                                        </span>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="d-inline-flex align-items-center gap-1 Client_table_action_area">
+                                            <a href="/admin/show-order/${order.id}" class="btn btn-sm btn-outline-primary px-2 py-1 Client_table_action_icon" title="View Order">
+                                                <i class="ti ti-eye ti-xs"></i>
+                                            </a>
+                                            ${!isSettled ? `
+                                                <button class="btn btn-sm btn-outline-secondary px-2 py-1 Client_table_action_icon" onclick="window.location='/admin/edit-order/${order.id}'" title="Edit Order">
+                                                    <i class="ti ti-pencil ti-xs"></i>
+                                                </button>
+                                                <div class="btn-group dropstart order_list_action_menu_dropmenu">
+                                                    <button type="button" class="btn btn-sm btn-outline-warning px-2 py-1 dropdown-toggle Client_table_action_icon" data-bs-toggle="dropdown" aria-expanded="false" data-order_id="${order.id}">
+                                                        <i class="ti ti-layout-grid ti-xs"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu shadow border-0 py-1">
+                                                        <li>
+                                                            <a class="dropdown-item set_ord_btn py-2 text-warning d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#SettleOrder" data-order_id="${order.id}">
+                                                                <i class="ti ti-cash"></i> Settle & Deliver
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            ` : ''}
+                                            <button class="btn btn-sm btn-outline-info px-2 py-1 Client_table_action_icon rcp_btn" data-order_id="${order.id}" title="Print Receipt & Tags">
+                                                <i class="ti ti-printer ti-xs"></i>
+                                            </button>
+                                            ${!isSettled ? `
+                                                <button class="btn btn-sm btn-outline-danger px-2 py-1 Client_table_action_icon delete_order_btn" data-id="${order.id}" data-bs-toggle="modal" data-bs-target="#delete_order" title="Delete Order">
+                                                    <i class="ti ti-trash ti-xs"></i>
+                                                </button>
+                                            ` : ''}
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
                             tbody.append(row);
                         });
                         attachEventHandlers();
-                        // Reattach event handlers for buttons (if any)
                     }
                 });
             });
 
             function attachEventHandlers() {
-                // for delete service
-                $('.delete_order_btn').click(function() {
+                $('.delete_order_btn').off('click').on('click', function() {
                     var orderId = $(this).data('id');
-                    $('#order_del_id').val(
-                        orderId);
+                    $('#order_del_id').val(orderId);
                     $('#delete_order').modal('show');
                 });
 
-                $('#confirm_delete').click(function() {
+                $('#confirm_delete').off('click').on('click', function() {
                     var formData = $('#deleteOrderForm').serialize();
                     var orderId = $('#order_del_id').val();
 
@@ -357,112 +400,51 @@
                     });
                 });
 
-
-
-                // for id add and show print model
-                $('.rcp_btn').click(function() {
-                    // alert("Hello Shaktiman");
+                $('.rcp_btn').off('click').on('click', function() {
                     var id = $(this).data('order_id');
-                    // alert(id)
-;
-                    // $('#sendWhatsAppMessage').attr('href', '/send-wh-message/' + id);
                     $('#printReceipt').attr('href', '/admin/receipt/' + id);
                     $('#printTags').attr('href', '/admin/tagslist/' + id);
                     $('#yes').modal('show');
                 });
 
-
-                $('#SettleOrder').on('show.bs.modal', function(event) {
-                    var button = $(event.relatedTarget); // Button that triggered the modal
-                    var orderId = button.data(
-                    'order_id'); // Extract order ID from data-* attributes
+                $('#SettleOrder').off('show.bs.modal').on('show.bs.modal', function(event) {
+                    var button = $(event.relatedTarget);
+                    var orderId = button.data('order_id');
                     var modal = $(this);
-                    modal.attr('data-order-id',
-                    orderId); // Set the order ID in the modal's data attribute
+                    modal.attr('data-order-id', orderId);
+                    modal.data('order-id', orderId);
                 });
-
-
-
-
-
-
             }
+
             attachEventHandlers();
-            $('#settleAndDeliverButton').on('click', function() {
-                    var modal = $('#SettleOrder');
-                    var orderId = modal.data('order-id');
-                    var paymentOption = $('input[name="paymentOption"]:checked').val();
 
-                    if (!paymentOption) {
-                        // alert('Please select a payment option.');
-                        $('#paymentError').text('Please select a payment option.');
-                        return;
+            $('#settleAndDeliverButton').off('click').on('click', function() {
+                var modal = $('#SettleOrder');
+                var orderId = modal.data('order-id');
+                var paymentOption = $('input[name="paymentOption"]:checked').val();
+
+                if (!paymentOption) {
+                    $('#paymentError').text('Please select a payment option.');
+                    return;
+                }
+
+                $.ajax({
+                    url: '/admin/settle-and-deliver-order/' + orderId,
+                    method: 'POST',
+                    data: {
+                        paymentType: paymentOption,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        modal.modal('hide');
+                        window.location.href = '{{ route('invoice') }}';
+                    },
+                    error: function(xhr) {
+                        alert('Error: ' + xhr.responseText);
                     }
-
-                    $.ajax({
-                        url: '/admin/settle-and-deliver-order/' + orderId,
-                        method: 'POST',
-                        data: {
-                            paymentType: paymentOption,
-                            _token: $('meta[name="csrf-token"]').attr(
-                                    'content'
-                                    ) // Assuming you have a CSRF token meta tag
-                        },
-                        success: function(response) {
-                            // Handle success, e.g., show a success message and close the modal
-                            alert('Order settled and delivered successfully.');
-                            modal.modal('hide');
-                            // location
-                            //     .reload(); // Optional: Reload the page to update the order status
-                            window.location.href = '{{ route('invoice') }}';
-                        },
-                        error: function(xhr) {
-                            // Handle error
-                            alert('Error: ' + xhr.responseText);
-                        }
-                    });
                 });
-            // Cash On Button Click Handler
-            $('.cash-on-btn').on('click', function() {
-                    var modal = $('#SettleOrder');
-                    var orderId = modal.attr('data-order-id');
-                    console.log('Cash On for order ID:', orderId);
-                    // Add your logic here to proceed with Cash On delivery
-                    // For example: You can submit a form or make an AJAX request with the orderId
-                    $('#CashOnConfirmation').modal('show');
-                });
-
-                // Upi Payment Button Click Handler
-                $('.upi-payment-btn').on('click', function() {
-                    var modal = $('#SettleOrder');
-                    var orderId = modal.attr('data-order-id');
-                    console.log('UPI Payment for order ID:', orderId);
-                    // Add your logic here to proceed with UPI payment
-                    // For example: You can submit a form or make an AJAX request with the orderId
-                    $('#UpiConfirmation').modal('show');
-                });
-
-                // Proceed with Cash On Delivery
-                $('.proceed-cash-on').on('click', function() {
-                    var modal = $('#SettleOrder');
-                    var orderId = modal.attr('data-order-id');
-                    console.log('Proceed with Cash On Delivery for order ID:', orderId);
-                    // Add your logic here to proceed with Cash On delivery
-                    // For example: You can submit a form or make an AJAX request with the orderId
-                    $('#CashOnConfirmation').modal('hide');
-                });
-
-                // Proceed with Upi Payment
-                $('.proceed-upi-payment').on('click', function() {
-                    var modal = $('#SettleOrder');
-                    var orderId = modal.attr('data-order-id');
-                    console.log('Proceed with UPI Payment for order ID:', orderId);
-                    // Add your logic here to proceed with UPI payment
-                    // For example: You can submit a form or make an AJAX request with the orderId
-                    $('#UpiConfirmation').modal('hide');
-                });
+            });
         });
-
     });
-
 </script>
+@endsection

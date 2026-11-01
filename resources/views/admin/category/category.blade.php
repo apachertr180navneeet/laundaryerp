@@ -24,46 +24,61 @@
 </style>
     <div class="content-wrapper page_content_section_hp">
         <div class="container-xxl">
+            <!-- Page Header -->
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+                <div>
+                    <h4 class="fw-bold mb-1" style="color: #1F446E;">
+                        <i class="ti ti-category me-2"></i>Category Management
+                    </h4>
+                    <p class="text-muted mb-0 small">Create and organize garment & laundry categories.</p>
+                </div>
+            </div>
+
             <div class="add_client_form_area_hp mb-4">
                 <div class="card">
+                    <div class="card-header pb-2">
+                        <h5 class="card-title mb-0 d-flex align-items-center gap-2" style="font-size: 1.05rem; color: #1F446E;">
+                            <i class="ti ti-plus text-primary"></i> Add New Category
+                        </h5>
+                    </div>
                     <div class="card-body">
                         @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="ti ti-check me-2"></i>{{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
-                        <h4>Add Category</h4>
                         <form action="{{ route('add.category') }}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <div class="row align-items-center justify-content-center">
-                                <div class="col-xl-3 col-lg-5 col-md-6 col-12">
-                                    <div class="mb-2">
-                                        <label for="add_category_name" class="form-label">Category Name</label>
-                                        <input type="text" name="categoryname" class="form-control" placeholder="Enter Category Name" id="add_category_name">
+                            <div class="row g-3 align-items-end">
+                                <div class="col-md-5 col-12">
+                                    <label for="add_category_name" class="form-label fw-semibold small text-muted">Category Name <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="ti ti-category text-muted"></i></span>
+                                        <input type="text" name="categoryname" class="form-control" placeholder="e.g. Men's Wear" id="add_category_name" required>
                                     </div>
-                                    <span class="alert text-danger" id="add_category_name_error">
+                                    <span class="text-danger small mt-1 d-block" id="add_category_name_error">
                                         @error('categoryname')
                                             {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
-                                <div class="col-xl-3 col-lg-5 col-md-6 col-12">
-                                    <div class="mb-2">
-                                        <label for="add_category_short_name" class="form-label">Category Short Name</label>
-                                        <input type="text" name="categoryshortname" class="form-control" id="add_category_short_name" placeholder="Enter Category Short Name">
+                                <div class="col-md-4 col-12">
+                                    <label for="add_category_short_name" class="form-label fw-semibold small text-muted">Short Code / Abbr <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="ti ti-tag text-muted"></i></span>
+                                        <input type="text" name="categoryshortname" class="form-control" id="add_category_short_name" placeholder="e.g. MW" required>
                                     </div>
-                                    <span class="alert text-danger" id="add_category_short_name_error">
+                                    <span class="text-danger small mt-1 d-block" id="add_category_short_name_error">
                                         @error('categoryshortname')
                                             {{ $message }}
                                         @enderror
                                     </span>
                                 </div>
-                                <div class="col">
-                                    <div class="mb-4">
-                                        <label for="exampleFormControlInput1" class="form-label"></label>
-                                        <button type="submit" class="btn btn_1F446E_hp w-100"
-                                            id="add_save_client">Save</button>
-                                    </div>
+                                <div class="col-md-3 col-12">
+                                    <button type="submit" class="btn btn_1F446E_hp w-100 d-flex align-items-center justify-content-center gap-2" id="add_save_client">
+                                        <i class="ti ti-device-floppy"></i> Save Category
+                                    </button>
                                 </div>
                             </div>
                         </form>

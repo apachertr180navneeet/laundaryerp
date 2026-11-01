@@ -24,7 +24,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
-<body style="background: #1f446e14;">
+<body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">

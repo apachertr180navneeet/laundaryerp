@@ -1,111 +1,99 @@
 @if (!Auth::user())
-    {{-- <script type="text/javascript">
-        window.location = "{{ route('login') }}";
-    </script> --}}
     @php
         $errorMessage = 'Please contact the superadmin for access.';
         return redirect()->route('login')->withErrors([$errorMessage]);
     @endphp
 @else
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme bg_1F446E_hp sidebar_section_hp">
-    <div class="app-brand demo">
-        <a href="{{ route('dashboard') }}" class="app-brand-link">
-            <!-- <span class="app-brand-logo demo">
-                <svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z"
-                    fill="#7367F0" />
-                <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
-                    d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616" />
-                <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd"
-                    d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616" />
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z"
-                    fill="#7367F0" />
-                </svg>
-            </span> -->
-            <img src="{{ asset('theam/Images/white_logo.png') }}"  class="mt-0">
+    <div class="app-brand demo" style="height: 75px; padding: 12px 18px; display: flex; align-items: center; justify-content: center;">
+        <a href="{{ route('dashboard') }}" class="app-brand-link d-flex align-items-center gap-2">
+            <img src="{{ asset('theam/Images/white_logo.png') }}" alt="WashFlow ERP" style="max-height: 44px; width: auto; object-fit: contain;">
         </a>
-
-        <!-- <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-            <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
-            <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
-        </a> -->
     </div>
 
     <div class="menu-inner-shadow"></div>
 
-    <ul class="menu-inner py-1 mt-0">
-        <li class="menu-item">
+    <ul class="menu-inner py-2 mt-0">
+        <!-- Main Section -->
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Overview</span>
+        </li>
+        <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-dashboard"></i>
-                <div data-i18n="Layouts">Dashboard</div>
+                <div data-i18n="Dashboard">Dashboard</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item {{ request()->routeIs('orders.analitices') ? 'active' : '' }}">
             <a href="{{ route('orders.analitices') }}" class="menu-link">
-                <i class="menu-icon ti ti-server"></i>
-                <div data-i18n="Layouts">Analytics Dashboard </div>
+                <i class="menu-icon ti ti-chart-pie-2"></i>
+                <div data-i18n="Analytics">Analytics</div>
             </a>
         </li>
-        <li class="menu-item">
+
+        <!-- Directory & Catalog -->
+        <li class="menu-header small text-uppercase mt-2">
+            <span class="menu-header-text">Catalog & Clients</span>
+        </li>
+        <li class="menu-item {{ request()->routeIs('clientpage*') ? 'active' : '' }}">
             <a href="{{ route('clientpage') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-user"></i>
-                <div data-i18n="Layouts">Clients</div>
+                <i class="menu-icon tf-icons ti ti-users"></i>
+                <div data-i18n="Clients">Clients</div>
             </a>
         </li>
-
-
-        <li class="menu-item">
+        <li class="menu-item {{ request()->routeIs('categories*') ? 'active' : '' }}">
             <a href="{{ route('categories') }}" class="menu-link">
-                <i class="menu-icon ti ti-list"></i>
-                <div data-i18n="Layouts">Categories</div>
+                <i class="menu-icon ti ti-category"></i>
+                <div data-i18n="Categories">Categories</div>
             </a>
         </li>
-
-        <li class="menu-item">
+        <li class="menu-item {{ request()->routeIs('services*') ? 'active' : '' }}">
             <a href="{{ route('services') }}" class="menu-link">
-                <i class="menu-icon ti ti-list"></i>
-                <div data-i18n="Layouts">Services</div>
+                <i class="menu-icon ti ti-shirt"></i>
+                <div data-i18n="Services">Services</div>
             </a>
         </li>
-
-        <li class="menu-item">
+        <li class="menu-item {{ request()->routeIs('items*') ? 'active' : '' }}">
             <a href="{{ route('items') }}" class="menu-link">
-                <i class="menu-icon ti ti-list"></i>
-                <div data-i18n="Layouts">Item</div>
+                <i class="menu-icon ti ti-tags"></i>
+                <div data-i18n="Item">Items</div>
             </a>
         </li>
 
-
-        <li class="menu-item">
+        <!-- Orders & Billing -->
+        <li class="menu-header small text-uppercase mt-2">
+            <span class="menu-header-text">Orders & Billing</span>
+        </li>
+        <li class="menu-item {{ (request()->routeIs('addOrder') || request()->routeIs('viewOrder') || request()->routeIs('order.*') || request()->is('admin/show-order*')) ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-package"></i>
-                <div data-i18n="Layouts">Our Order</div>
+                <div data-i18n="Orders">Orders</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
+                <li class="menu-item {{ request()->routeIs('addOrder') ? 'active' : '' }}">
                     <a href="{{ route('addOrder') }}" class="menu-link">
-                        <div data-i18n="Content navbar">Add Order</div>
+                        <i class="ti ti-plus ti-xs me-2"></i>
+                        <div data-i18n="Add Order">New Order</div>
                     </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item {{ (request()->routeIs('viewOrder') || request()->routeIs('order.*') || request()->is('admin/show-order*')) ? 'active' : '' }}">
                     <a href="{{ route('viewOrder') }}" class="menu-link">
-                        <div data-i18n="Collapsed menu">View Orders</div>
+                        <i class="ti ti-list ti-xs me-2"></i>
+                        <div data-i18n="View Orders">All Orders</div>
                     </a>
                 </li>
             </ul>
         </li>
-        <li class="menu-item">
+        <li class="menu-item {{ request()->routeIs('payment*') ? 'active' : '' }}">
             <a href="{{ route('payment') }}" class="menu-link">
                 <i class="ti ti-credit-card menu-icon"></i>
-                <div data-i18n="Layouts">Payment</div>
+                <div data-i18n="Payment">Payments</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item {{ request()->routeIs('invoice*') ? 'active' : '' }}">
             <a href="{{ route('invoice') }}" class="menu-link">
                 <i class="ti ti-receipt menu-icon"></i>
-                <div data-i18n="Layouts">Invoice</div>
+                <div data-i18n="Invoice">Invoices</div>
             </a>
         </li>
     </ul>
@@ -120,103 +108,69 @@
         </a>
     </div>
 
-    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-        <div class="navbar-nav align-items-center">
-            <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
-                <i class="ti ti-sm"></i>
-            </a>
+    <div class="navbar-nav-right d-flex align-items-center w-100" id="navbar-collapse">
+        <div class="navbar-nav align-items-center me-auto d-none d-md-flex">
+            <span class="text-white-50 small me-2"><i class="ti ti-sparkles text-warning me-1"></i> WashFlow ERP</span>
+            <span class="badge bg-white text-primary rounded-pill px-2 py-1 small fw-semibold">Live</span>
         </div>
 
-        <ul class="navbar-nav flex-row align-items-center ms-auto">
+        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
+            <!-- Quick New Order Shortcut -->
+            <li class="nav-item me-2 d-none d-sm-block">
+                <a href="{{ route('addOrder') }}" class="btn btn-sm btn-light text-primary fw-semibold shadow-sm d-flex align-items-center gap-1" style="border-radius: 20px;">
+                    <i class="ti ti-plus ti-xs"></i> New Order
+                </a>
+            </li>
+
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                @if (Auth::user()->is_admin == '1')
-                {{-- @dd(Auth::user()->image); --}}
-                @if(Auth::user()->image != "")
-                <div class="avatar avatar-online">
-                    <img src="{{ asset('images/'.Auth::user()->image) }}" alt class="h-auto rounded-circle" />
-                </div>
-            @else
-                <div class="avatar avatar-online">
-                    <img src="{{ asset('theam/assets/img/avatars/1.png') }}" alt class="h-auto rounded-circle" />
-                </div>
-            @endif
-                @else
-                    @if(Auth::user()->image != "")
-                        <div class="avatar avatar-online">
-                            <img src="{{ asset('images/'.Auth::user()->image) }}" alt class="h-auto rounded-circle" />
-                        </div>
-                    @else
-                        <div class="avatar avatar-online">
-                            <img src="{{ asset('theam/assets/img/avatars/1.png') }}" alt class="h-auto rounded-circle" />
-                        </div>
-                    @endif
-
-                @endif
+                <a class="nav-link dropdown-toggle hide-arrow d-flex align-items-center gap-2" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                        @if(Auth::user()->image && file_exists(public_path('images/'.Auth::user()->image)))
+                            <img src="{{ asset('images/'.Auth::user()->image) }}" alt="{{ Auth::user()->name }}" class="h-auto rounded-circle" />
+                        @else
+                            <div class="avatar-initial rounded-circle bg-white text-primary fw-bold" style="width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                            </div>
+                        @endif
+                    </div>
+                    <div class="d-none d-lg-block text-start">
+                        <span class="fw-semibold text-white d-block lh-1 small">{{ Auth::user()->name }}</span>
+                        <small class="text-white-50" style="font-size: 11px;">Admin</small>
+                    </div>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0 me-3">
-                                    @if (Auth::user()->is_admin == '1')
-                                    {{-- @dd(Auth::user()->image); --}}
-                                    @if(Auth::user()->image != "")
-                                    <div class="avatar avatar-online">
-                                        <img src="{{ asset('images/'.Auth::user()->image) }}" alt class="h-auto rounded-circle" />
-                                    </div>
-                                     @else
-                                    <div class="avatar avatar-online">
-                                        <img src="{{ asset('theam/assets/img/avatars/1.png') }}" alt class="h-auto rounded-circle" />
-                                    </div>
-                                    @endif
-                                    @else
-                                        @if(Auth::user()->image != "")
-                                            <div class="avatar avatar-online">
-                                                <img src="{{ asset('images/'.Auth::user()->image) }}" alt class="h-auto rounded-circle" />
-                                            </div>
-                                        @else
-                                            <div class="avatar avatar-online">
-                                                <img src="{{ asset('theam/assets/img/avatars/1.png') }}" alt class="h-auto rounded-circle" />
-                                            </div>
-                                        @endif
-
-                                    @endif
-
-                                </div>
-                                @php
-                                    $loginname = Auth::user()->name;
-                                @endphp
-                                <div class="flex-grow-1 mt-3">
-                                    <span
-                                        class="fw-semibold d-block">{{ !empty($loginname) ? $loginname : '' }}</span>
-                                    <!-- <small class="text-muted">Admin</small> -->
+                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 py-2" style="min-width: 220px; border-radius: 12px;">
+                    <li class="px-3 py-2 border-bottom mb-1">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar me-2">
+                                <div class="avatar-initial rounded-circle bg-label-primary fw-bold">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                                 </div>
                             </div>
-                        </a>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <span class="fw-semibold text-dark d-block text-truncate">{{ Auth::user()->name }}</span>
+                                <small class="text-muted d-block text-truncate">{{ Auth::user()->email }}</small>
+                            </div>
+                        </div>
                     </li>
                     <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="{{ route('myProfile') }}">
-                            <i class="ti ti-user-check me-2 ti-sm"></i>
+                        <a class="dropdown-item py-2" href="{{ route('myProfile') }}">
+                            <i class="ti ti-user me-2 text-primary"></i>
                             <span class="align-middle">My Profile</span>
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('change.password') }}">
-                            <i class="ti ti-user-check me-2 ti-sm"></i>
+                        <a class="dropdown-item py-2" href="{{ route('change.password') }}">
+                            <i class="ti ti-key me-2 text-warning"></i>
                             <span class="align-middle">Change Password</span>
                         </a>
                     </li>
                     <li>
-                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('logout') }}">
-                            <i class="ti ti-logout me-2 ti-sm"></i>
+                        <a class="dropdown-item py-2 text-danger" href="{{ route('logout') }}">
+                            <i class="ti ti-logout me-2"></i>
                             <span class="align-middle">Log Out</span>
                         </a>
                     </li>

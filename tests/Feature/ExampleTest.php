@@ -38,4 +38,34 @@ class ExampleTest extends TestCase
         $response->assertRedirect('/dashboard');
         $this->assertAuthenticated();
     }
+
+    public function test_authenticated_user_can_view_dashboard_and_modules(): void
+    {
+        $user = \App\Models\User::where('email', 'admin@laundry.com')->first();
+        $this->actingAs($user);
+
+        $dashboard = $this->get('/dashboard');
+        $dashboard->assertStatus(200);
+        $dashboard->assertSee('Dashboard Overview');
+
+        $clients = $this->get('/admin/client');
+        $clients->assertStatus(200);
+        $clients->assertSee('Client Management');
+
+        $orders = $this->get('/admin/view-order');
+        $orders->assertStatus(200);
+        $orders->assertSee('Order Management');
+
+        $categories = $this->get('/admin/categories');
+        $categories->assertStatus(200);
+        $categories->assertSee('Category Management');
+
+        $services = $this->get('/admin/services');
+        $services->assertStatus(200);
+        $services->assertSee('Service Management');
+
+        $items = $this->get('/admin/items');
+        $items->assertStatus(200);
+        $items->assertSee('Catalog Items');
+    }
 }
